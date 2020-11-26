@@ -5,14 +5,13 @@ import vuetify from './plugins/vuetify';
 import Vuelidate from 'vuelidate'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
-import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
-import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
-
+import GSignInButton from 'vue-google-signin-button'
+Vue.use(GSignInButton)
 
 Vue.config.productionTip = false
+Vue.prototype.$email = ""
 
 Vue.use(Vuelidate)
-Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 new Vue({
   router,

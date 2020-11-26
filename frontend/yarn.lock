@@ -5541,7 +5541,7 @@ moment-range@^4.0.1:
   dependencies:
     es6-symbol "^3.1.0"
 
-moment@^2.24.0, moment@^2.29.1:
+moment@^2.24.0:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -8326,6 +8326,11 @@ vue-eslint-parser@^7.0.0:
     espree "^6.2.1"
     esquery "^1.0.1"
     lodash "^4.17.15"
+
+vue-google-signin-button@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-google-signin-button/-/vue-google-signin-button-1.0.4.tgz#733e9fea786ff730278c8eef8be9f594adc8d7b8"
+  integrity sha512-spmf+qPQQ1zAEndDxybYsf22U47eYPuvU9cb1N9YETmPQ4+UBG9ALLxgID1mHkusvBVclRyxmvJc3zc7hD56wg==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"

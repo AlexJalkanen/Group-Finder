@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            Group-Finder Requests
+            Groups Looking for Members:
             <v-spacer></v-spacer>
             <!-- <v-text-field
                 v-model="search"
@@ -20,7 +20,7 @@
             loading-text="Loading... Please wait"
             show-expand
             :expanded.sync="expanded"
-            item-key="host"
+            item-key="groupID"
         >
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
@@ -28,37 +28,180 @@
                         <v-col align="start">
                             <v-list-item flat two-line>
                             <v-list-item-content>
-                            <v-list-item-title>Location</v-list-item-title>
-                            <v-list-item-subtitle>{{item.location}}</v-list-item-subtitle>
+                            <v-list-item-title>Availability</v-list-item-title>
+                            <v-row>
+                                <v-col>
+                                    <v-card
+                                    class="justify-center"
+                                    height="30"
+                                    width="30"
+                                    outlined
+                                    :color=item.monday_color
+                                    >
+                                    <v-layout justify-center>
+                                        <p style="color:white;">M</p>
+                                    </v-layout>
+                                    
+                                    </v-card>
+                                </v-col>
+                                <v-col>
+                                    <v-card
+                                    class="mx-auto"
+                                    height="30"
+                                    width="30"
+                                    outlined
+                                    :color=item.tuesday_color
+                                    >
+                                    <v-layout justify-center>
+                                        <p style="color:white;">T</p>
+                                    </v-layout>
+                                    </v-card>
+                                </v-col>
+                                <v-col>
+                                    <v-card
+                                    class="mx-auto"
+                                    height="30"
+                                    width="30"
+                                    outlined
+                                    :color=item.wednesday_color
+                                    >
+                                    <v-layout justify-center>
+                                        <p style="color:white;">W</p>
+                                    </v-layout>
+                                    </v-card>
+                                </v-col>
+                                <v-col>
+                                    <v-card
+                                    class="mx-auto"
+                                    height="30"
+                                    width="30"
+                                    outlined
+                                    :color=item.thursday_color
+                                    >
+                                    <v-layout justify-center>
+                                        <p style="color:white;">T</p>
+                                    </v-layout>
+                                    </v-card>
+                                </v-col>
+                                <v-col>
+                                    <v-card
+                                    class="mx-auto"
+                                    height="30"
+                                    width="30"
+                                    outlined
+                                    :color=item.friday_color
+                                    >
+                                    <v-layout justify-center>
+                                        <p style="color:white;">F</p>
+                                    </v-layout>
+                                    </v-card>
+                                </v-col>
+                                <v-col>
+                                    <v-card
+                                    class="mx-auto"
+                                    height="30"
+                                    width="30"
+                                    outlined
+                                    :color=item.saturday_color
+                                    >
+                                    <v-layout justify-center>
+                                        <p style="color:white;">S</p>
+                                    </v-layout>
+                                    </v-card>
+                                </v-col>
+                                <v-col>
+                                    <v-card
+                                    class="mx-auto"
+                                    height="30"
+                                    width="30"
+                                    outlined
+                                    :color=item.sunday_color
+                                    >
+                                    <v-layout justify-center>
+                                        <p style="color:white;">S</p>
+                                    </v-layout>
+                                    </v-card>
+                                </v-col>
+                                
+                            </v-row>
                             </v-list-item-content>
                         </v-list-item>
 
                         <v-list-item flat two-line>
                             <v-list-item-content>
-                            <v-list-item-title>School</v-list-item-title>
-                            <v-list-item-subtitle>{{item.school}}</v-list-item-subtitle>
+                            <v-list-item-title>Synchronous vs. Asynchronous Work</v-list-item-title>
+                            <v-row>
+                                <v-col lg="12">
+                                    <v-slider
+                                    :value=item.async
+                                    readonly
+                                    track-color="purple"
+                                    always-dirty
+                                    min="0"
+                                    max="100"
+                                    >
+                                    <template v-slot:prepend> Together </template>
+
+                                    <template v-slot:append> Independent </template>
+                                    </v-slider>
+                                </v-col>
+                            </v-row>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item flat two-line>
+                            <v-list-item-content>
+                            <v-list-item-title>Starting assignments</v-list-item-title>
+                            <v-row>
+                                <v-col lg="12">
+                                    <v-slider
+                                    :value=item.procast
+                                    readonly
+                                    track-color="purple"
+                                    always-dirty
+                                    min="0"
+                                    max="100"
+                                    >
+                                    <template v-slot:prepend> Immediately </template>
+
+                                    <template v-slot:append> Eventually </template>
+                                    </v-slider>
+                                </v-col>
+                            </v-row>
                             </v-list-item-content>
                         </v-list-item>
                         
-                        <v-btn v-if="!item.groupmates.includes('<insert email>')" small color="primary" class="mb-2 ml-3 mt-1" @click="addUser(item); addUserPersonal(item);">Join Group</v-btn>
-                        <v-btn v-else small color="grey" class="mb-2 ml-3 mt-1" @click="removeUser(item)">Leave Group</v-btn>
+                        <v-btn small color="primary" class="mb-2 ml-3 mt-1" @click="addUser(item); addUserPersonal(item);">Join Group</v-btn>
+                        <v-btn small color="grey" class="mb-2 ml-3 mt-1" @click="removeUser(item)">Leave Group</v-btn>
                         </v-col>
+
+                        <v-col align="start">
+                            <v-list-item flat two-line>
+                                <v-list-item-content>
+                                <v-list-item-title>Other information about the group:</v-list-item-title>
+                                <v-list-item-subtitle>{{item.other}}</v-list-item-subtitle>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </v-col>
+
                         <v-col align="start">
                             <v-list flat>
-                            {{item.groupmates.length}} / {{item.maxPeople}} Groupmates have already joined.
+                            {{item.groupmates.length}} / 6 Groupmates have already joined.
                             <v-list-item
-                                v-for="(sb, i) in item.groupmates"
+                                v-for="(gm, i) in item.groupmates"
                                 :key="i"
                             >
                                 <v-list-item-icon>
                                     <v-icon size="15">fa-users</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-subtitle>{{sb}}</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{gm}}</v-list-item-subtitle>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list>
                         </v-col>
+
+                        
                     </v-row>              
                 </td>
             </template>
@@ -77,33 +220,54 @@ export default {
       expanded: [],
       headers: [
         {
-          text: 'Host',
+          text: 'Group ID',
           align: 'start',
-          sortable: false,
-          value: 'host',
+          sortable: true,
+          value: 'groupID',
         },
-        { text: 'Subject', value: 'subject' },
-        { text: 'Virtual', value: 'virtual' },
-        { text: 'Start Time', value: 'starttime' },
-        { text: 'End Time', value: 'endtime' },
-        //     created: created,
-        //     starttime: starttime,
-        //     endtime: endtime,
-        //     open: open,
-        //     maxPeople: maxPeople,
-        //     location: location,
-        //     school: school,
-        //     subject: subject,
-        //     virtual: virtual, 
-        //     groupmates: groupmates
+        { text: 'Group Members', value: 'groupcount' },
+        { text: 'Location', value: 'location' },
+        { text: 'Time Zone', value: 'timezone' },
       ],
       items: []
     }
   },
   async mounted () {
     try {
-        const response = await axios.get('<insert backend api url here>');
-        this.items = response.data["Items"];
+        const response = await axios.get("http://127.0.0.1:8000/api/groups/");
+        this.items = response.data["groups"];
+        this.items.forEach(element => {
+            if (element['inPerson'] && element['virtual'] ) {
+                element['location'] = 'Prefer remote and in person.';
+            }
+            else if (element['inPerson']) {
+                element['location'] = 'Prefer in person work.'
+            }
+            else {
+                element['location'] = 'Prefer remote work.'
+            }
+            let groupmates = [];
+            if (element['groupmate1'] !== '') groupmates.push(element['groupmate1']);
+            if (element['groupmate2'] !== '') groupmates.push(element['groupmate2']);
+            if (element['groupmate3'] !== '') groupmates.push(element['groupmate3']);
+            if (element['groupmate4'] !== '') groupmates.push(element['groupmate4']);
+            if (element['groupmate5'] !== '') groupmates.push(element['groupmate5']);
+            if (element['groupmate6'] !== '') groupmates.push(element['groupmate6']);
+            groupmates.push("alexjalk");
+            groupmates.push("alexjalk");
+            element['groupmates'] = groupmates;
+            element['groupcount'] = groupmates.length + " / 6 group members.";
+            if (element['other'] == "") {
+                element['other'] = "No other group information provided.";
+            }
+            element['monday'] ? element['monday_color'] = "green" : element['monday_color'] = "red";
+            element['tuesday'] ? element['tuesday_color'] = "green" : element['tuesday_color'] = "red";
+            element['wednesday'] ? element['wednesday_color'] = "green" : element['wednesday_color'] = "red";
+            element['thursday'] ? element['thursday_color'] = "green" : element['thursday_color'] = "red";
+            element['friday'] ? element['friday_color'] = "green" : element['friday_color'] = "red";
+            element['saturday'] ? element['saturday_color'] = "green" : element['saturday_color'] = "red";
+            element['sunday'] ? element['sunday_color'] = "green" : element['sunday_color'] = "red";
+        });
         this.loading = false;
     }
     catch (error) {

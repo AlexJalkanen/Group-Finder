@@ -1,0 +1,56 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+print_help () {
+	echo "Usage: ./bin/db (create|destroy|reset|dump)"
+}
+
+create () {
+	if [ -d "sql/db.sqlite3" ]
+	then 
+		echo "Error: database already exists."
+		exit 1
+	else
+		sqlite3 sql/db.sqlite3 < sql/schema.sql
+		sqlite3 sql/db.sqlite3 < sql/data.sql
+	fi
+}
+
+destroy () {
+	rm sql/db.sqlite3
+}
+
+dump () {
+    echo "*** sqlite3 -batch -line sql/db.sqlite3 'SELECT * FROM groups' ***"
+    echo ""
+    sqlite3 -batch -line sql/db.sqlite3 'SELECT * FROM groups'
+}
+
+
+if [ $# -ne 1 ]
+then
+	print_help
+	exit 1
+fi
+
+case $1 in
+	"create")
+		create
+		;;
+	"destroy")
+		destroy
+		;;
+	"reset")
+		destroy
+		create
+		;;
+	"dump")
+		dump
+		;;
+	*)
+	print_help 
+	exit 1
+	;;
+esac
+

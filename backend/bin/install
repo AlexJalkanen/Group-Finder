@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -xEeuo pipefail
+
+python3 -m venv env
+set +u
+. env/bin/activate
+set -u
+
+pip install -e .

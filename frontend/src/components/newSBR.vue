@@ -221,9 +221,9 @@
               min="0"
               max="100"
             >
-              <template v-slot:prepend> Independent </template>
+              <template v-slot:prepend> Together </template>
 
-              <template v-slot:append> Together </template>
+              <template v-slot:append> Independent </template>
             </v-slider>
           </v-col>
         </v-row>
@@ -266,6 +266,7 @@
               outlined
               name="other"
               label="Other Information"
+              :counter="1024"
             ></v-textarea>
           </v-col>
         </v-row>
@@ -349,7 +350,6 @@ export default {
               async: this.async,
               procastination: this.procastination,
               otherinfo: this.otherinfo,
-              created: "now",
               open: true,
               virtual: virt,
               groupmates: [

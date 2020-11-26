@@ -1,192 +1,405 @@
 <template>
-    <v-stepper v-model="e6" vertical>
-        <v-stepper-step :complete="e6 > 1" step="1">
-            Which class are you studying for?
+  <v-stepper v-model="e6" vertical>
+    <v-stepper-step :complete="e6 > 1" step="1">
+      Which days work best for your current group?
 
-            <v-stepper-content step="1">
-                <v-text-field
-                    v-model="subject"
-                    :counter="20"
-                    label="Subject"
-                    required
-                    class="mt-3">
-                </v-text-field>
-                <v-btn to="/" text>Cancel</v-btn>
-                <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
-            </v-stepper-content>
+      <v-stepper-content step="1">
+        <v-row>
+            <v-col>
+                <v-card
+          class="mx-auto"
+            max-width="344"
+            outlined
+            :color="monday"
+            @click="monday == 'red' ? monday = 'green' : monday = 'red'"
+            >
+            <v-card-text>
+                <h3>Monday</h3>
+            </v-card-text>
 
-        </v-stepper-step>
+          </v-card>
+            </v-col>
 
-        <v-stepper-step :complete="e6 > 2" step="2">
-            What time do you plan on studying?
+            <v-col>
+                <v-card
+          class="mx-auto"
+            max-width="344"
+            :color="tuesday"
+            outlined
+            @click="tuesday == 'red' ? tuesday = 'green' : tuesday = 'red'"
+            >
+            <v-card-text>
+                <h3>Tuesday</h3>
+            </v-card-text>
 
-            <v-stepper-content step="2">
-                <v-text-field
-                    v-model="starttime"
-                    :counter="20"
-                    label="Start Time"
-                    required
-                    class="mt-3">
-                </v-text-field>
-                <v-text-field
-                    v-model="endtime"
-                    :counter="20"
-                    label="Approx End Time"
-                    required
-                    class="mt-3">
-                </v-text-field>
-                
-                <v-btn @click="e6 = 1" text>Go Back</v-btn>
-                <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
-            </v-stepper-content>
+          </v-card>
+            </v-col>
 
-        </v-stepper-step>
+            <v-col>
+                <v-card
+          class="mx-auto"
+            max-width="344"
+            :color="wednesday"
+            outlined
+            @click="wednesday == 'red' ? wednesday = 'green' : wednesday = 'red'"
+            >
+            <v-card-text>
+                <h3>Wednesday</h3>
+            </v-card-text>
 
-        <v-stepper-step :complete="e6 > 3" step="3">
-            Where do you plan on studying?
+          </v-card>
+            </v-col>
 
-            <v-stepper-content step="3">
-                <v-radio-group v-model="virtual" :mandatory="true">
-                    <v-radio label="I plan to study in person." value="physical"></v-radio>
-                    <v-radio label="I plan to study virtually." value="virtual"></v-radio>
-                </v-radio-group>
-                <v-text-field
-                    v-model="location"
-                    :counter="100"
-                    label="Location/Meeting Link"
-                    required
-                    class="mt-3">
-                </v-text-field>
-                <v-btn @click="e6 = 2" text>Go Back</v-btn>
-                <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
-                
-            </v-stepper-content>
+            <v-col>
+                <v-card
+          class="mx-auto"
+            max-width="344"
+            :color="thursday"
+            outlined
+            @click="thursday == 'red' ? thursday = 'green' : thursday = 'red'"
+            >
+            <v-card-text>
+                <h3>Thursday</h3>
+            </v-card-text>
 
-        </v-stepper-step>
+          </v-card>
+            </v-col>
 
-        <v-stepper-step :complete="e6 > 4" step="4">
-            Group Details
+            <v-col>
+                <v-card
+          class="mx-auto"
+            max-width="344"
+            :color="friday"
+            outlined
+            @click="friday == 'red' ? friday = 'green' : friday = 'red'"
+            >
+            <v-card-text>
+                <h3>Friday</h3>
+            </v-card-text>
 
-            <v-stepper-content step="4">
-                
-                <v-text-field
-                    v-model="maxNumber"
-                    type="number"
-                    label="Max Number of Other Groupmates"
-                    required
-                    class="mt-3">
-                </v-text-field>
+          </v-card>
+            </v-col>
 
-                <v-text-field
-                    v-model="email"
-                    :counter="50"
-                    label="Your Email Address"
-                    required
-                    class="mt-3">
-                </v-text-field>
+            <v-col>
+                <v-card
+          class="mx-auto"
+            max-width="344"
+            :color="saturday"
+            outlined
+            @click="saturday == 'red' ? saturday = 'green' : saturday = 'red'"
+            >
+            <v-card-text>
+                <h3>Saturday</h3>
+            </v-card-text>
 
-                <v-text-field
-                    v-model="school"
-                    :counter="50"
-                    label="Your School"
-                    required
-                    class="mt-3">
-                </v-text-field>
-                <v-btn @click="e6 = 3" text>Go Back</v-btn>
-                <v-btn color="primary" @click="e6 = 5; submit(); addUserPersonal();">Submit Group Request</v-btn>
-                
-            </v-stepper-content>
-        </v-stepper-step>
+          </v-card>
+            </v-col>
 
-        <v-overlay :value="overlayLoad">
-            <v-progress-circular indeterminate size="64"></v-progress-circular>
-        </v-overlay>
+            <v-col>
+                <v-card
+          class="mx-auto"
+            max-width="344"
+            :color="sunday"
+            outlined
+            @click="sunday == 'red' ? sunday = 'green' : sunday = 'red'"
+            >
+            <v-card-text>
+                <h3>Sunday</h3>
+            </v-card-text>
 
-        <v-snackbar v-model="snackbar" :timeout="timeout">
-            Success! You have registered your group!
-            <v-btn color="blue" text @click="snackbar = false" >
-                Close
-            </v-btn>
-        </v-snackbar>
-    </v-stepper>
+          </v-card>
+            </v-col>
+
+        </v-row>
+          
+          <v-row>
+              <v-col>
+                  Which timezone are you in?
+              </v-col>
+          </v-row>
+          <v-row>
+              <v-col>
+                  <v-text-field
+          v-model="timezone"
+          :counter="20"
+          label="Timezone"
+          required
+          class="mt-3"
+        >
+        </v-text-field>
+              </v-col>
+          </v-row>
+        
+        <v-btn to="/" text>Cancel</v-btn>
+        <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
+      </v-stepper-content>
+    </v-stepper-step>
+
+    <v-stepper-step :complete="e6 > 2" step="2">
+      Where do you prefer to meet?
+
+      <v-stepper-content step="2">
+        <v-radio-group v-model="virtual" :mandatory="true">
+          <v-radio label="Prefer to meet in person." value="physical"></v-radio>
+          <v-radio label="Prefer to meet virtually." value="virtual"></v-radio>
+          <v-radio
+            label="Either in person or virtually."
+            value="both"
+          ></v-radio>
+        </v-radio-group>
+
+        <v-btn @click="e6 = 1" text>Go Back</v-btn>
+        <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
+      </v-stepper-content>
+    </v-stepper-step>
+
+    <v-stepper-step :complete="e6 > 3" step="3">
+      Do you already have other groupmates? If so, please fill in their Umich
+      emails.
+
+      <v-stepper-content step="3">
+        <v-text-field
+          v-model="groupmate1"
+          :counter="18"
+          label="Groupmate 1"
+          required
+          class="mt-3"
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="groupmate2"
+          :counter="18"
+          label="Groupmate 2"
+          required
+          class="mt-3"
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="groupmate3"
+          :counter="18"
+          label="Groupmate 3"
+          required
+          class="mt-3"
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="groupmate4"
+          :counter="18"
+          label="Groupmate 4"
+          required
+          class="mt-3"
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="groupmate5"
+          :counter="18"
+          label="Groupmate 5"
+          required
+          class="mt-3"
+        >
+        </v-text-field>
+        <v-btn @click="e6 = 2" text>Go Back</v-btn>
+        <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
+      </v-stepper-content>
+    </v-stepper-step>
+
+    <v-stepper-step :complete="e6 > 4" step="4">
+      Group Details
+
+      <v-stepper-content step="4">
+        <v-row>
+          <v-col lg="12">
+            Do you prefer working asynchronously or synchronously?
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col lg="12">
+            <v-slider
+              v-model="async"
+              track-color="purple"
+              always-dirty
+              min="0"
+              max="100"
+            >
+              <template v-slot:prepend> Independent </template>
+
+              <template v-slot:append> Together </template>
+            </v-slider>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col lg="12">
+            How soon do you prefer to start working on an assignment?
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col lg="12">
+            <v-slider
+              v-model="procastination"
+              track-color="purple"
+              always-dirty
+              min="0"
+              max="100"
+            >
+              <template v-slot:prepend> Immediately </template>
+
+              <template v-slot:append> Eventually </template>
+            </v-slider>
+          </v-col>
+        </v-row>
+
+        <v-btn @click="e6 = 3" text>Go Back</v-btn>
+        <v-btn color="primary" @click="e6 = 5">Continue</v-btn>
+      </v-stepper-content>
+    </v-stepper-step>
+
+    <v-stepper-step :complete="e6 > 5" step="5">
+      Any other information to share?
+
+      <v-stepper-content step="5">
+        <v-row>
+          <v-col lg="12">
+            <v-textarea
+              v-model="otherinfo"
+              outlined
+              name="other"
+              label="Other Information"
+            ></v-textarea>
+          </v-col>
+        </v-row>
+
+        <v-btn @click="e6 = 4" text>Go Back</v-btn>
+        <v-btn
+          color="primary"
+          @click="
+            e6 = 6;
+            submit();
+            addUserPersonal();
+          "
+          >Submit Group Request</v-btn
+        >
+      </v-stepper-content>
+    </v-stepper-step>
+
+    <v-overlay :value="overlayLoad">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+
+    <v-snackbar v-model="snackbar" :timeout="timeout">
+      Success! You have registered your group!
+      <v-btn color="blue" text @click="snackbar = false"> Close </v-btn>
+    </v-snackbar>
+  </v-stepper>
 </template>
 
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-    name: "newSBR",
-    data () {
-        return {
-            e6: 1,
-            subject: '',
-            starttime: '',
-            endtime: '',
-            location: '',
-            virtual: 'physical',
-            maxNumber: 0,
-            email: '',
-            school: '',
-            overlayLoad: false,
-            snackbar: false,
-            timeout: 5000,
-        }
-    },
-    methods: {
-        async submit () {
-            this.overlayLoad = true;
-            try {
-                let config = {
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                }                
-                let virt = (this.virtual == "virtual") ? true : false;
-                await axios.post('https://8wugvfc99e.execute-api.us-east-2.amazonaws.com/prod/sbr', {
-                    host: this.email,
-                    created: "now",
-                    starttime: this.starttime,
-                    endtime: this.endtime,
-                    open: true,
-                    maxPeople: parseInt(this.maxNumber),
-                    location: this.location,
-                    school: this.school,
-                    subject: this.subject,
-                    virtual: virt,
-                    groupmates: []
-                }, config)
-                .then(function (response) {
-                    console.log(response);
-                });
-                this.snackbar = true;
-                this.overlayLoad = false;
-                this.$router.push({ name: 'Home', params: { }})
-            }
-            catch (error) {
-                console.log(error)
-                this.overlayLoad = false;
-            }
-        },
-        async addUserPersonal() {
-        try {
-            let config = {
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            }                
-            await axios.patch('<insert backend api url here>', {
-                newGroup: "<insert user email here>",
-            }, config)
-            .then(function (response) {
-                console.log(response);
-            });
-        }
-        catch (error) {
-            console.log(error)
-            this.overlayLoad = false;
-        }
-      },
+  name: "newSBR",
+  data() {
+    return {
+      e6: 1,
+      monday: "red",
+      tuesday: "red",
+      wednesday: "red",
+      thursday: "red",
+      friday: "red",
+      saturday: "red",
+      sunday: "red",
+      timezone: "",
+      groupmate1: "",
+      groupmate2: "",
+      groupmate3: "",
+      groupmate4: "",
+      groupmate5: "",
+      async: "50",
+      procastination: "50",
+      virtual: "physical",
+      otherinfo: "",
+      overlayLoad: false,
+      snackbar: false,
+      timeout: 5000,
+    };
   },
-}
+  methods: {
+    async submit() {
+      this.overlayLoad = true;
+      try {
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        let virt = this.virtual == "virtual" ? true : false;
+        let aMon = this.monday == "red" ? false : true;
+        let aTue = this.tuesday == "red" ? false : true;
+        let aWed = this.wednesday == "red" ? false : true;
+        let aThur = this.thursday == "red" ? false : true;
+        let aFri = this.friday == "red" ? false : true;
+        let aSat = this.saturday == "red" ? false : true;
+        let aSun = this.sunday == "red" ? false : true;
+        await axios
+          .post(
+            "<insert backend api url here>",
+            {
+              async: this.async,
+              procastination: this.procastination,
+              otherinfo: this.otherinfo,
+              created: "now",
+              open: true,
+              virtual: virt,
+              groupmates: [
+                this.groupmate1,
+                this.groupmate2,
+                this.groupmate3,
+                this.groupmate4,
+                this.groupmate5,
+              ],
+              availability: [
+                  aMon, aTue, aWed, aThur, aFri, aSat, aSun
+              ],
+              timezone: this.timezone
+            },
+            config
+          )
+          .then(function (response) {
+            console.log(response);
+          });
+        this.snackbar = true;
+        this.overlayLoad = false;
+        this.$router.push({ name: "Home", params: {} });
+      } catch (error) {
+        console.log(error);
+        this.overlayLoad = false;
+      }
+    },
+    async addUserPersonal() {
+      try {
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        await axios
+          .patch(
+            "<insert backend api url here>",
+            {
+              newGroup: "<insert user email here>",
+            },
+            config
+          )
+          .then(function (response) {
+            console.log(response);
+          });
+      } catch (error) {
+        console.log(error);
+        this.overlayLoad = false;
+      }
+    },
+  },
+};
 </script>

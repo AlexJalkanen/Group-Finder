@@ -18,5 +18,6 @@ setup(
         'requests==2.22.0',
         'selenium==3.141.0',
         'sh==1.12.14',
+        'flask-cors==3.0.9'
     ],
 )

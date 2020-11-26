@@ -209,7 +209,7 @@
       <v-stepper-content step="4">
         <v-row>
           <v-col lg="12">
-            Do you prefer working asynchronously or synchronously?
+            Do you prefer working synchronously or asynchronously?
           </v-col>
         </v-row>
         <v-row>
@@ -277,7 +277,6 @@
           @click="
             e6 = 6;
             submit();
-            addUserPersonal();
           "
           >Submit Group Request</v-btn
         >
@@ -335,7 +334,8 @@ export default {
             "Content-Type": "application/json",
           },
         };
-        let virt = this.virtual == "virtual" ? true : false;
+        let virtual = this.virtual == "virtual" || this.virtual == "both" ? true : false;
+        let inPerson = this.virtual == "physical" || this.virtual == "both" ? true : false;
         let aMon = this.monday == "red" ? false : true;
         let aTue = this.tuesday == "red" ? false : true;
         let aWed = this.wednesday == "red" ? false : true;
@@ -345,24 +345,29 @@ export default {
         let aSun = this.sunday == "red" ? false : true;
         await axios
           .post(
-            "<insert backend api url here>",
+            "http://127.0.0.1:8000/api/groups/",
             {
+              groupmate1: 'signedin@umich.edu',
+              groupmate2: this.groupmate1,
+              groupmate3: this.groupmate2,
+              groupmate4: this.groupmate3,
+              groupmate5: this.groupmate4,
+              groupmate6: this.groupmate5,
+              isOpen: true,
+              monday: aMon,
+              tuesday: aTue,
+              wednesday: aWed,
+              thursday: aThur,
+              friday: aFri,
+              saturday: aSat,
+              sunday: aSun,
+              timezone: this.timezone,
+              inPerson: inPerson,
+              virtual: virtual,
               async: this.async,
-              procastination: this.procastination,
-              otherinfo: this.otherinfo,
-              open: true,
-              virtual: virt,
-              groupmates: [
-                this.groupmate1,
-                this.groupmate2,
-                this.groupmate3,
-                this.groupmate4,
-                this.groupmate5,
-              ],
-              availability: [
-                  aMon, aTue, aWed, aThur, aFri, aSat, aSun
-              ],
-              timezone: this.timezone
+              procast: this.procastination,
+              other: this.otherinfo,
+              teamname: ""
             },
             config
           )
@@ -372,29 +377,6 @@ export default {
         this.snackbar = true;
         this.overlayLoad = false;
         this.$router.push({ name: "Home", params: {} });
-      } catch (error) {
-        console.log(error);
-        this.overlayLoad = false;
-      }
-    },
-    async addUserPersonal() {
-      try {
-        let config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        await axios
-          .patch(
-            "<insert backend api url here>",
-            {
-              newGroup: "<insert user email here>",
-            },
-            config
-          )
-          .then(function (response) {
-            console.log(response);
-          });
       } catch (error) {
         console.log(error);
         this.overlayLoad = false;

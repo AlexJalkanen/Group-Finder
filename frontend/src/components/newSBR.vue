@@ -119,10 +119,11 @@
           <v-col>
             <v-text-field
               v-model="timezone"
-              :counter="20"
+              :counter="18"
               label="Timezone"
               required
               class="mt-3"
+              @keydown="limit( $event, 'timezone', 18)"
             >
             </v-text-field>
           </v-col>
@@ -162,6 +163,7 @@
           label="Groupmate 1"
           required
           class="mt-3"
+          @keydown="limit( $event, 'groupmate1', 18)"
         >
         </v-text-field>
         <v-text-field
@@ -170,6 +172,7 @@
           label="Groupmate 2"
           required
           class="mt-3"
+          @keydown="limit( $event, 'groupmate2', 18)"
         >
         </v-text-field>
         <v-text-field
@@ -178,6 +181,7 @@
           label="Groupmate 3"
           required
           class="mt-3"
+          @keydown="limit( $event, 'groupmate3', 18)"
         >
         </v-text-field>
         <v-text-field
@@ -186,6 +190,7 @@
           label="Groupmate 4"
           required
           class="mt-3"
+          @keydown="limit( $event, 'groupmate4', 18)"
         >
         </v-text-field>
         <v-text-field
@@ -194,6 +199,7 @@
           label="Groupmate 5"
           required
           class="mt-3"
+          @keydown="limit( $event, 'groupmate5', 18)"
         >
         </v-text-field>
         <v-btn @click="e6 = 2" text>Go Back</v-btn>
@@ -265,6 +271,7 @@
               name="other"
               label="Other Information"
               :counter="1024"
+              @keydown="limit( $event, 'other', 18)"
             ></v-textarea>
           </v-col>
         </v-row>
@@ -326,6 +333,11 @@ export default {
     };
   },
   methods: {
+    limit( event, dataProp, limit ) {
+        if (this[dataProp].length >= limit) {
+            event.preventDefault();
+        }
+    },
     async submit() {
       this.overlayLoad = true;
       try {

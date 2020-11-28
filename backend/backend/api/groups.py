@@ -18,7 +18,15 @@ def get_groups():
         return flask.jsonify(groups = response)
     
     if request.method == 'POST':
-        print(request.json['groupmate1'])
+        request.json['groupmate1'] = request.json['groupmate1'][0:18]
+        request.json['groupmate2'] = request.json['groupmate2'][0:18]
+        request.json['groupmate3'] = request.json['groupmate3'][0:18]
+        request.json['groupmate4'] = request.json['groupmate4'][0:18]
+        request.json['groupmate5'] = request.json['groupmate5'][0:18]
+        request.json['groupmate6'] = request.json['groupmate6'][0:18]
+        request.json['timezone'] = request.json['timezone'][0:18]
+        request.json['other'] = request.json['other'][0:1024]
+        request.json['teamname'] = request.json['teamname'][0:1024]
         sql = "INSERT INTO groups(groupmate1, groupmate2, groupmate3, groupmate4, groupmate5, groupmate6, isOpen, monday, tuesday, wednesday, thursday,friday, saturday, sunday, timezone, inPerson, virtual, async, procast,other, teamname) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
         cur = connection.execute(sql, (request.json['groupmate1'], request.json['groupmate2'], request.json['groupmate3'], request.json['groupmate4'], request.json['groupmate5'], request.json['groupmate6'], request.json['isOpen'], request.json['monday'], request.json['tuesday'], request.json['wednesday'], request.json['thursday'], request.json['friday'], request.json['saturday'], request.json['sunday'], request.json['timezone'], request.json['inPerson'], request.json['virtual'], request.json['async'], request.json['procast'], request.json['other'], request.json['teamname'],))
         return '', 201
@@ -26,6 +34,7 @@ def get_groups():
 @backend.app.route('/api/groups/<email>', methods=['GET', 'PATCH'])
 @cross_origin(allow_headers=['Content-Type'])
 def get_unique_group(email):
+    email = email[0:18]
     connection = backend.model.get_db()
 
     if request.method == 'GET':
@@ -49,8 +58,9 @@ def get_unique_group(email):
 @backend.app.route('/api/groups/<int:id>/<email>', methods=['DELETE'])
 @cross_origin(allow_headers=['Content-Type'])
 def delete_group_member(id, email):
+    email = email[0:18]
     connection = backend.model.get_db()
-    
+
     sql = "SELECT * FROM groups WHERE groupID = ?;"
     cur = connection.execute(sql, (id,))
     response = cur.fetchone()

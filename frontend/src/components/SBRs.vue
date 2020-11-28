@@ -14,6 +14,7 @@
       item-key="groupID"
       show-expand
       :expanded.sync="expanded"
+      max-width="1000"
     >
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
@@ -191,7 +192,9 @@
                   <v-list-item-title
                     >Other information about the group:</v-list-item-title
                   >
-                  <v-list-item-subtitle>{{ item.other }}</v-list-item-subtitle>
+                  <p>
+                      {{ item.other }}
+                  </p>
                 </v-list-item-content>
               </v-list-item>
             </v-col>
@@ -337,9 +340,6 @@ export default {
         );
         item.groupmates.push(email);
         item.groupcount = item.groupmates.length + " / 6 group members.";
-        let temp = this.items;
-        this.items = [];
-        this.items = temp;
       } catch (error) {
         this.overlayLoad = false;
       }
@@ -373,9 +373,12 @@ export default {
         const index = item.groupmates.indexOf(email);
         item.groupmates.splice(index, 1);
         item.groupcount = item.groupmates.length + " / 6 group members.";
-        let temp = this.items;
-        this.items = [];
-        this.items = temp;
+        if (item.groupmates.length === 0) {
+            const item_index = this.items.indexOf(item);
+            console.log(item_index);
+            this.items.splice(item_index, 1);
+            Vue.set(this, this.items, this.items);
+        }
       } catch (error) {
         this.overlayLoad = false;
       }

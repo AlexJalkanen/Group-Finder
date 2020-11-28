@@ -15,6 +15,7 @@
       show-expand
       :expanded.sync="expanded"
       max-width="1000"
+      @click:row="expandRow"
     >
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
@@ -311,6 +312,9 @@ export default {
     }
   },
   methods: {
+    expandRow (item) {
+        this.expanded = item === this.expanded[0] ? [] : [item]
+    },
     async addUser(item, email) {
       try {
         for (let i = 0; i < item.groupmates.length; i += 1) {

@@ -104,7 +104,7 @@ export default {
           return;
         }
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/groups/" + newVal.email
+          "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + newVal.email
         );
         let element = response.data["group"];
         this.groupmates = [];

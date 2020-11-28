@@ -243,7 +243,7 @@ export default {
   },
   async mounted() {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/groups/");
+      const response = await axios.get("http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/");
       this.items = response.data["groups"];
       for (let i = 0; i < this.items.length; i += 1) {
         if (this.items[i]["inPerson"] && this.items[i]["virtual"]) {
@@ -322,14 +322,14 @@ export default {
           },
         };
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/groups/" + email
+          "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + email
         );
         if (response.data.group != null) {
           alert("You are already in a group!");
           return;
         }
         await axios.patch(
-          "http://127.0.0.1:8000/api/groups/" + email,
+          "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + email,
           {
             groupID: item.groupID,
           },
@@ -363,7 +363,7 @@ export default {
           },
         };
         await axios.delete(
-          "http://127.0.0.1:8000/api/groups/" +
+          "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" +
             String(item.groupID) +
             "/" +
             email,

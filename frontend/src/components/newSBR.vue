@@ -330,7 +330,7 @@ export default {
       this.overlayLoad = true;
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/groups/" + this.useremail
+          "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + this.useremail
         );
         if (response.data.group != null) {
           alert("You are already in a group!");
@@ -342,7 +342,7 @@ export default {
         let unavailable_teammates = [];
         if (this.groupmate1 != "") {
           const response = await axios.get(
-            "http://127.0.0.1:8000/api/groups/" + this.groupmate1
+            "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + this.groupmate1
           );
           if (response.data.group != null) {
             unavailable_teammates.push(this.groupmate1);
@@ -350,7 +350,7 @@ export default {
         }
         if (this.groupmate2 != "") {
           const response = await axios.get(
-            "http://127.0.0.1:8000/api/groups/" + this.groupmate2
+            "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + this.groupmate2
           );
           if (response.data.group != null) {
             unavailable_teammates.push(this.groupmate2);
@@ -358,7 +358,7 @@ export default {
         }
         if (this.groupmate3 != "") {
           const response = await axios.get(
-            "http://127.0.0.1:8000/api/groups/" + this.groupmate3
+            "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + this.groupmate3
           );
           if (response.data.group != null) {
             unavailable_teammates.push(this.groupmate3);
@@ -366,7 +366,7 @@ export default {
         }
         if (this.groupmate4 != "") {
           const response = await axios.get(
-            "http://127.0.0.1:8000/api/groups/" + this.groupmate4
+            "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + this.groupmate4
           );
           if (response.data.group != null) {
             unavailable_teammates.push(this.groupmate4);
@@ -374,7 +374,7 @@ export default {
         }
         if (this.groupmate5 != "") {
           const response = await axios.get(
-            "http://127.0.0.1:8000/api/groups/" + this.groupmate5
+            "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + this.groupmate5
           );
           if (response.data.group != null) {
             unavailable_teammates.push(this.groupmate5);
@@ -407,7 +407,7 @@ export default {
         let aSun = this.sunday == "red" ? false : true;
         await axios
           .post(
-            "http://127.0.0.1:8000/api/groups/",
+            "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/",
             {
               groupmate1: this.useremail,
               groupmate2: this.groupmate1,

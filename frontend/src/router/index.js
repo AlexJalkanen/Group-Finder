@@ -8,13 +8,16 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      requireAuth: false
+    },
   },
   {
     path: '/create',
     name: 'Create',
     meta: {
-      requiresAuth: true
+      requireAuth: true
     },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -25,7 +28,7 @@ Vue.use(VueRouter)
     path: '/join',
     name: 'Join',
     meta: {
-      requiresAuth: true
+      requireAuth: true
     },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -36,7 +39,7 @@ Vue.use(VueRouter)
     path: '/login',
     name: 'Login',
     meta: {
-      requiresAuth: false
+      requireAuth: false
     },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -52,18 +55,13 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, _, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (Vue.prototype.$email == "") {
-      next({ name: 'Login' })
-    } 
-    else {
-      next() // go to wherever I'm going
-    }
-  } else {
-    next() // does not require auth, make sure to always call next()!
-  }
+  let currentUser = auth.user()
+  let requireAuth = to.matched.some(record => record.meta.requireAuth)
+  let guestOnly = to.matched.some(record => record.meta.guestOnly)
+
+  if (requireAuth && !currentUser) next('login')
+  else if (guestOnly && currentUser) next('/')
+  else next()
 })
 
 export default router

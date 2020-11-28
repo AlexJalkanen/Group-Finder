@@ -296,6 +296,7 @@
 
 
 <script>
+import Vue from 'vue';
 import axios from "axios";
 
 export default {
@@ -347,7 +348,7 @@ export default {
           .post(
             "http://127.0.0.1:8000/api/groups/",
             {
-              groupmate1: 'signedin@umich.edu',
+              groupmate1: Vue.prototype.$email,
               groupmate2: this.groupmate1,
               groupmate3: this.groupmate2,
               groupmate4: this.groupmate3,

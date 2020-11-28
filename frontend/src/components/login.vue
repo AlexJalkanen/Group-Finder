@@ -31,7 +31,9 @@ export default {
       // `googleUser` is the GoogleUser object that represents the just-signed-in user.
       // See https://developers.google.com/identity/sign-in/web/reference#users
       const profile = googleUser.getBasicProfile() 
-      Vue.prototype.$email = profile['cu'];
+      Vue.$cookies.set('email', profile['cu']);
+      this.$router.push('/');
+      
     },
     onSignInError (error) {
       // `error` contains any error occurred.

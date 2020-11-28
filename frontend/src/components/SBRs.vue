@@ -171,7 +171,7 @@
                             </v-list-item-content>
                         </v-list-item>
                         
-                        <v-btn small color="primary" class="mb-2 ml-3 mt-1" @click="addUser(item); addUserPersonal(item);">Join Group</v-btn>
+                        <v-btn v-if="!item.groupmates.includes(email)" small color="primary" class="mb-2 ml-3 mt-1" @click="addUser(item); ">Join Group</v-btn>
                         <v-btn small color="grey" class="mb-2 ml-3 mt-1" @click="removeUser(item)">Leave Group</v-btn>
                         </v-col>
 
@@ -211,6 +211,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios'
 export default {
   name: 'SBRs',
@@ -218,6 +219,7 @@ export default {
     return {
       loading: true,
       expanded: [],
+      email: Vue.$cookies.get('email'),
       headers: [
         {
           text: 'Group ID',
@@ -291,25 +293,6 @@ export default {
             this.overlayLoad = false;
             item.groupmates.push("<insert email>");
 
-        }
-        catch (error) {
-            console.log(error)
-            this.overlayLoad = false;
-        }
-      },
-      async addUserPersonal(item) {
-        try {
-            let config = {
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            }                
-            await axios.patch('<insert backend api url here>', {
-                newGroup: item.host,
-            }, config)
-            .then(function (response) {
-                console.log(response);
-            });
         }
         catch (error) {
             console.log(error)

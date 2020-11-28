@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import auth from '@/auth'
 
 const state = {
     user: null

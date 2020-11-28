@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Auth from '@/views/Auth'
+import auth from '@/auth'
 
 Vue.use(VueRouter)
 
@@ -36,15 +38,16 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/Join.vue')
   },
   {
-    path: '/login',
-    name: 'Login',
+    path: '/auth',
+    name: 'Auth',
+    component: Auth,
     meta: {
-      requireAuth: false
+      guestOnly: true
     },
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+  },
+  {
+    path: '*',
+    redirect: '/',
   }
 ]
 
@@ -58,8 +61,8 @@ router.beforeEach((to, _, next) => {
   let currentUser = auth.user()
   let requireAuth = to.matched.some(record => record.meta.requireAuth)
   let guestOnly = to.matched.some(record => record.meta.guestOnly)
-
-  if (requireAuth && !currentUser) next('login')
+  
+  if (requireAuth && !currentUser) next('auth')
   else if (guestOnly && currentUser) next('/')
   else next()
 })

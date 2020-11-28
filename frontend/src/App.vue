@@ -8,8 +8,8 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
-              <!-- <v-btn :v-if="email == ''" to="/login" text>Login</v-btn>
-              <v-btn :v-if="email != ''" to="/" @click="email = ''" text>Logout</v-btn> -->
+              <v-btn v-if="!user" to="/auth" text>Log in</v-btn>
+              <v-btn v-else @click="logOut" text>Log out</v-btn>
               <v-btn to="/join" text>Join</v-btn>
               <v-btn to="/create" text>Create</v-btn>
             </v-toolbar-items>
@@ -27,6 +27,23 @@
   </div>
 </template>
 
+<script>
+import auth from '@/auth'
+
+  export default {
+    name: 'auth-success',
+    computed: {
+      user() {
+        return this.$store.getters['user/user']
+      }
+    },
+    methods: {
+      logOut() {
+        auth.logout()
+      }
+    }
+  }
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Sign in</h1>
+    <h1>Sign in with Umich Email:</h1>
     <div id="firebaseui-auth-container"></div>
   </div>
 </template>

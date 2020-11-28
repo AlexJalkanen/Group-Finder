@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import firebaseui from 'firebaseui';
+import * as firebaseui from 'firebaseui'
 
 const config = {
     apiKey: "AIzaSyDz2K43fHV9iNXeyrKvF_-seg3x4ix8ZOw",
@@ -24,9 +24,7 @@ const auth = {
     this.uiConfig = {
       signInSuccessUrl: 'dashboard',
       signInOptions: [
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.EmailAuthProvider.PROVIDER_ID
       ]
     }
     this.ui = new firebaseui.auth.AuthUI(firebase.auth());

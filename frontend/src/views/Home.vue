@@ -47,8 +47,7 @@
         
         <img id="mainPic" alt="Studygroup" src="../assets/studygroup.png">
       </v-col>
-    </v-row>
-    
+    </v-row>    
     
   </div>
 </template>

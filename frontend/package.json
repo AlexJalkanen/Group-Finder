@@ -15,6 +15,7 @@
     "firebase": "^8.1.1",
     "firebaseui": "^4.7.1",
     "roboto-fontface": "*",
+    "serve": "^11.3.2",
     "vue": "^2.6.11",
     "vue-cli-plugin-s3-deploy": "^4.0.0-rc3",
     "vue-cookies": "^1.7.4",

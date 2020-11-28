@@ -32,7 +32,7 @@
               loading-text="Loading... Please wait"
             >
               <v-btn text color="Primary" to="/join"> Join a different </v-btn>
-              <v-btn text color="Primary" to="/create"> Create your own </v-btn>
+              <v-btn text color="Primary" to="/create"> Register new </v-btn>
             </v-card-actions>
           </v-alert>
         </v-card>
@@ -103,27 +103,26 @@ export default {
           this.groupmates = [];
           return;
         }
-        try {
-          const response = await axios.get(
-            "http://127.0.0.1:8000/api/groups/" + newVal.email
-          );
-          let element = response.data["group"];
-          this.groupmates = [];
-          if (element["groupmate1"] !== "")
-            this.groupmates.push(element["groupmate1"]);
-          if (element["groupmate2"] !== "")
-            this.groupmates.push(element["groupmate2"]);
-          if (element["groupmate3"] !== "")
-            this.groupmates.push(element["groupmate3"]);
-          if (element["groupmate4"] !== "")
-            this.groupmates.push(element["groupmate4"]);
-          if (element["groupmate5"] !== "")
-            this.groupmates.push(element["groupmate5"]);
-          if (element["groupmate6"] !== "")
-            this.groupmates.push(element["groupmate6"]);
-        } catch (error) {
-          console.log(error);
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/groups/" + newVal.email
+        );
+        let element = response.data["group"];
+        this.groupmates = [];
+        if (element == null) {
+          return;
         }
+        if (element["groupmate1"] !== "")
+          this.groupmates.push(element["groupmate1"]);
+        if (element["groupmate2"] !== "")
+          this.groupmates.push(element["groupmate2"]);
+        if (element["groupmate3"] !== "")
+          this.groupmates.push(element["groupmate3"]);
+        if (element["groupmate4"] !== "")
+          this.groupmates.push(element["groupmate4"]);
+        if (element["groupmate5"] !== "")
+          this.groupmates.push(element["groupmate5"]);
+        if (element["groupmate6"] !== "")
+          this.groupmates.push(element["groupmate6"]);
       },
     },
   },

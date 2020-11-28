@@ -329,6 +329,66 @@ export default {
     async submit() {
       this.overlayLoad = true;
       try {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/groups/" + this.useremail
+        );
+        if (response.data.group != null) {
+          alert("You are already in a group!");
+          this.e6 = 5;
+          this.overlayLoad = false;
+          return;
+        }
+
+        let unavailable_teammates = [];
+        if (this.groupmate1 != "") {
+          const response = await axios.get(
+            "http://127.0.0.1:8000/api/groups/" + this.groupmate1
+          );
+          if (response.data.group != null) {
+            unavailable_teammates.push(this.groupmate1);
+          }
+        }
+        if (this.groupmate2 != "") {
+          const response = await axios.get(
+            "http://127.0.0.1:8000/api/groups/" + this.groupmate2
+          );
+          if (response.data.group != null) {
+            unavailable_teammates.push(this.groupmate2);
+          }
+        }
+        if (this.groupmate3 != "") {
+          const response = await axios.get(
+            "http://127.0.0.1:8000/api/groups/" + this.groupmate3
+          );
+          if (response.data.group != null) {
+            unavailable_teammates.push(this.groupmate3);
+          }
+        }
+        if (this.groupmate4 != "") {
+          const response = await axios.get(
+            "http://127.0.0.1:8000/api/groups/" + this.groupmate4
+          );
+          if (response.data.group != null) {
+            unavailable_teammates.push(this.groupmate4);
+          }
+        }
+        if (this.groupmate5 != "") {
+          const response = await axios.get(
+            "http://127.0.0.1:8000/api/groups/" + this.groupmate5
+          );
+          if (response.data.group != null) {
+            unavailable_teammates.push(this.groupmate5);
+          }
+        }
+
+        if (unavailable_teammates.length > 0) {
+          let str = "Your teammates: " + unavailable_teammates.toString() + " are already in a team!"
+          alert(str);
+          this.e6 = 5;
+          this.overlayLoad = false;
+          return;
+        }
+
         let config = {
           headers: {
             "Content-Type": "application/json",
@@ -372,15 +432,11 @@ export default {
               teamname: "",
             },
             config
-          )
-          .then(function (response) {
-            console.log(response);
-          });
+          );
         this.snackbar = true;
         this.overlayLoad = false;
         this.$router.push({ name: "Home", params: {} });
       } catch (error) {
-        console.log(error);
         this.overlayLoad = false;
       }
     },

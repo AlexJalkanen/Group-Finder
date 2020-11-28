@@ -3,13 +3,6 @@
     <v-card-title>
       Groups Looking for Members:
       <v-spacer></v-spacer>
-      <!-- <v-text-field
-                v-model="search"
-                append-icon="mdi-magnify"
-                label="Search"
-                single-line
-                hide-details
-            ></v-text-field> -->
     </v-card-title>
     <v-data-table
       :headers="headers"
@@ -18,9 +11,9 @@
       class="elevation-1"
       :loading="loading"
       loading-text="Loading... Please wait"
+      item-key="groupID"
       show-expand
       :expanded.sync="expanded"
-      item-key="groupID"
     >
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
@@ -128,7 +121,8 @@
               <v-list-item flat two-line>
                 <v-list-item-content>
                   <v-list-item-title
-                    >Synchronous vs. asynchronous work:</v-list-item-title
+                    >Prefer synchronous vs. asynchronous
+                    work:</v-list-item-title
                   >
                   <v-row>
                     <v-col lg="12">
@@ -152,7 +146,7 @@
               <v-list-item flat two-line>
                 <v-list-item-content>
                   <v-list-item-title
-                    >When to start assignments:</v-list-item-title
+                    >Prefer to start assignments:</v-list-item-title
                   >
                   <v-row>
                     <v-col lg="12">
@@ -223,6 +217,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import axios from "axios";
 import auth from "@/auth";
 export default {
@@ -250,67 +245,89 @@ export default {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/groups/");
       this.items = response.data["groups"];
-      this.items.forEach((element) => {
-        if (element["inPerson"] && element["virtual"]) {
-          element["location"] = "Prefer remote and in person.";
-        } else if (element["inPerson"]) {
-          element["location"] = "Prefer in person work.";
+      for (let i = 0; i < this.items.length; i += 1) {
+        if (this.items[i]["inPerson"] && this.items[i]["virtual"]) {
+          Vue.set(this.items[i], "location", "Prefer remote and in person.");
+        } else if (this.items[i]["inPerson"]) {
+          Vue.set(this.items[i], "location", "Prefer in person work.");
         } else {
-          element["location"] = "Prefer remote work.";
+          Vue.set(this.items[i], "location", "Prefer remote work.");
         }
         let groupmates = [];
-        if (element["groupmate1"] !== "")
-          groupmates.push(element["groupmate1"]);
-        if (element["groupmate2"] !== "")
-          groupmates.push(element["groupmate2"]);
-        if (element["groupmate3"] !== "")
-          groupmates.push(element["groupmate3"]);
-        if (element["groupmate4"] !== "")
-          groupmates.push(element["groupmate4"]);
-        if (element["groupmate5"] !== "")
-          groupmates.push(element["groupmate5"]);
-        if (element["groupmate6"] !== "")
-          groupmates.push(element["groupmate6"]);
-        element["groupmates"] = groupmates;
-        element["groupcount"] = groupmates.length + " / 6 group members.";
-        if (element["other"] == "") {
-          element["other"] = "No other group information provided.";
+        if (this.items[i]["groupmate1"] !== "")
+          groupmates.push(this.items[i]["groupmate1"]);
+        if (this.items[i]["groupmate2"] !== "")
+          groupmates.push(this.items[i]["groupmate2"]);
+        if (this.items[i]["groupmate3"] !== "")
+          groupmates.push(this.items[i]["groupmate3"]);
+        if (this.items[i]["groupmate4"] !== "")
+          groupmates.push(this.items[i]["groupmate4"]);
+        if (this.items[i]["groupmate5"] !== "")
+          groupmates.push(this.items[i]["groupmate5"]);
+        if (this.items[i]["groupmate6"] !== "")
+          groupmates.push(this.items[i]["groupmate6"]);
+        Vue.set(this.items[i], "groupmates", groupmates);
+        Vue.set(
+          this.items[i],
+          "groupcount",
+          String(groupmates.length) + " / 6 group members."
+        );
+
+        if (this.items[i]["other"] == "") {
+          Vue.set(
+            this.items[i],
+            "other",
+            "No other group information provided."
+          );
         }
-        element["monday"]
-          ? (element["monday_color"] = "green")
-          : (element["monday_color"] = "red");
-        element["tuesday"]
-          ? (element["tuesday_color"] = "green")
-          : (element["tuesday_color"] = "red");
-        element["wednesday"]
-          ? (element["wednesday_color"] = "green")
-          : (element["wednesday_color"] = "red");
-        element["thursday"]
-          ? (element["thursday_color"] = "green")
-          : (element["thursday_color"] = "red");
-        element["friday"]
-          ? (element["friday_color"] = "green")
-          : (element["friday_color"] = "red");
-        element["saturday"]
-          ? (element["saturday_color"] = "green")
-          : (element["saturday_color"] = "red");
-        element["sunday"]
-          ? (element["sunday_color"] = "green")
-          : (element["sunday_color"] = "red");
-      });
+        this.items[i]["monday"]
+          ? Vue.set(this.items[i], "monday_color", "green")
+          : Vue.set(this.items[i], "monday_color", "red");
+        this.items[i]["tuesday"]
+          ? Vue.set(this.items[i], "tuesday_color", "green")
+          : Vue.set(this.items[i], "tuesday_color", "red");
+        this.items[i]["wednesday"]
+          ? Vue.set(this.items[i], "wednesday_color", "green")
+          : Vue.set(this.items[i], "wednesday_color", "red");
+        this.items[i]["thursday"]
+          ? Vue.set(this.items[i], "thursday_color", "green")
+          : Vue.set(this.items[i], "thursday_color", "red");
+        this.items[i]["friday"]
+          ? Vue.set(this.items[i], "friday_color", "green")
+          : Vue.set(this.items[i], "friday_color", "red");
+        this.items[i]["saturday"]
+          ? Vue.set(this.items[i], "saturday_color", "green")
+          : Vue.set(this.items[i], "saturday_color", "red");
+        this.items[i]["sunday"]
+          ? Vue.set(this.items[i], "sunday_color", "green")
+          : Vue.set(this.items[i], "sunday_color", "red");
+      }
       this.loading = false;
     } catch (error) {
-      console.log(error);
+      this.loading = false;
     }
   },
   methods: {
     async addUser(item, email) {
       try {
+        for (let i = 0; i < item.groupmates.length; i += 1) {
+          if (item.groupmates[i] == email) {
+            alert("You are already in this group!");
+            return;
+          }
+        }
         let config = {
           headers: {
             "Content-Type": "application/json",
           },
         };
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/groups/" + email
+        );
+        if (response.data.group != null) {
+          alert("You are already in a group!");
+          return;
+        }
         await axios.patch(
           "http://127.0.0.1:8000/api/groups/" + email,
           {
@@ -320,12 +337,25 @@ export default {
         );
         item.groupmates.push(email);
         item.groupcount = item.groupmates.length + " / 6 group members.";
+        let temp = this.items;
+        this.items = [];
+        this.items = temp;
       } catch (error) {
-        console.log(error);
         this.overlayLoad = false;
       }
     },
     async removeUser(item, email) {
+      let found = false;
+      for (let i = 0; i < item.groupmates.length; i += 1) {
+        if (item.groupmates[i] == email) {
+          found = true;
+        }
+      }
+      if (!found) {
+        alert("Not in this group!");
+        return;
+      }
+
       try {
         let config = {
           headers: {
@@ -343,8 +373,10 @@ export default {
         const index = item.groupmates.indexOf(email);
         item.groupmates.splice(index, 1);
         item.groupcount = item.groupmates.length + " / 6 group members.";
+        let temp = this.items;
+        this.items = [];
+        this.items = temp;
       } catch (error) {
-        console.log(error);
         this.overlayLoad = false;
       }
     },

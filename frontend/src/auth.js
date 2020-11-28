@@ -2,14 +2,14 @@ import firebase from 'firebase'
 import * as firebaseui from 'firebaseui'
 
 const config = {
-    apiKey: "AIzaSyDz2K43fHV9iNXeyrKvF_-seg3x4ix8ZOw",
-    authDomain: "group-finder-296809.firebaseapp.com",
-    databaseURL: "https://group-finder-296809.firebaseio.com",
-    projectId: "group-finder-296809",
-    storageBucket: "group-finder-296809.appspot.com",
-    messagingSenderId: "772061849662",
-    appId: "1:772061849662:web:5c0131705bde63362c496f",
-    measurementId: "G-QD8TQ1KRHR"
+  apiKey: "AIzaSyDz2K43fHV9iNXeyrKvF_-seg3x4ix8ZOw",
+  authDomain: "group-finder-296809.firebaseapp.com",
+  databaseURL: "https://group-finder-296809.firebaseio.com",
+  projectId: "group-finder-296809",
+  storageBucket: "group-finder-296809.appspot.com",
+  messagingSenderId: "772061849662",
+  appId: "1:772061849662:web:5c0131705bde63362c496f",
+  measurementId: "G-QD8TQ1KRHR"
 };
 
 const auth = {
@@ -22,7 +22,7 @@ const auth = {
 
     firebase.initializeApp(config);
     this.uiConfig = {
-      signInSuccessUrl: 'dashboard',
+      signInSuccessUrl: '/',
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       ]
@@ -35,8 +35,8 @@ const auth = {
       let requireAuth = this.context.$route.matched.some(record => record.meta.requireAuth)
       let guestOnly = this.context.$route.matched.some(record => record.meta.guestOnly)
 
-      if(requireAuth && !user) this.context.$router.push('auth')
-      else if (guestOnly && user) this.context.$router.push('dashboard')
+      if (requireAuth && !user) this.context.$router.push('auth')
+      else if (guestOnly && user) this.context.$router.push('/')
     });
   },
   authForm(container) {
@@ -47,6 +47,7 @@ const auth = {
   },
   logout() {
     firebase.auth().signOut();
+    console.log(this.user());
   }
 }
 

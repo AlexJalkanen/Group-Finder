@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Sign in with Umich Email:</h1>
+    <p id="titlePhrase">Sign in with Umich Email:</p>
     <div id="firebaseui-auth-container"></div>
   </div>
 </template>
@@ -18,4 +18,7 @@
 
 <style>
   @import "../../node_modules/firebaseui/dist/firebaseui.css";
+  #titlePhrase {
+    font-size: 30px;
+  }
 </style>

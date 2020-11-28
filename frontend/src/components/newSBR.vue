@@ -1,135 +1,133 @@
 <template>
   <v-stepper v-model="e6" vertical>
     <v-stepper-step :complete="e6 > 1" step="1">
-      Which days work best for your current group?
+      Which days work best for your current group? (Click on the days)
 
       <v-stepper-content step="1">
         <v-row>
-            <v-col>
-                <v-card
-          class="mx-auto"
-            max-width="344"
-            outlined
-            :color="monday"
-            @click="monday == 'red' ? monday = 'green' : monday = 'red'"
+          <v-col>
+            <v-card
+              class="mx-auto"
+              max-width="344"
+              outlined
+              :color="monday"
+              @click="monday == 'red' ? (monday = 'green') : (monday = 'red')"
             >
-            <v-card-text>
+              <v-card-text>
                 <h3>Monday</h3>
-            </v-card-text>
+              </v-card-text>
+            </v-card>
+          </v-col>
 
-          </v-card>
-            </v-col>
-
-            <v-col>
-                <v-card
-          class="mx-auto"
-            max-width="344"
-            :color="tuesday"
-            outlined
-            @click="tuesday == 'red' ? tuesday = 'green' : tuesday = 'red'"
+          <v-col>
+            <v-card
+              class="mx-auto"
+              max-width="344"
+              :color="tuesday"
+              outlined
+              @click="
+                tuesday == 'red' ? (tuesday = 'green') : (tuesday = 'red')
+              "
             >
-            <v-card-text>
+              <v-card-text>
                 <h3>Tuesday</h3>
-            </v-card-text>
+              </v-card-text>
+            </v-card>
+          </v-col>
 
-          </v-card>
-            </v-col>
-
-            <v-col>
-                <v-card
-          class="mx-auto"
-            max-width="344"
-            :color="wednesday"
-            outlined
-            @click="wednesday == 'red' ? wednesday = 'green' : wednesday = 'red'"
+          <v-col>
+            <v-card
+              class="mx-auto"
+              max-width="344"
+              :color="wednesday"
+              outlined
+              @click="
+                wednesday == 'red' ? (wednesday = 'green') : (wednesday = 'red')
+              "
             >
-            <v-card-text>
+              <v-card-text>
                 <h3>Wednesday</h3>
-            </v-card-text>
+              </v-card-text>
+            </v-card>
+          </v-col>
 
-          </v-card>
-            </v-col>
-
-            <v-col>
-                <v-card
-          class="mx-auto"
-            max-width="344"
-            :color="thursday"
-            outlined
-            @click="thursday == 'red' ? thursday = 'green' : thursday = 'red'"
+          <v-col>
+            <v-card
+              class="mx-auto"
+              max-width="344"
+              :color="thursday"
+              outlined
+              @click="
+                thursday == 'red' ? (thursday = 'green') : (thursday = 'red')
+              "
             >
-            <v-card-text>
+              <v-card-text>
                 <h3>Thursday</h3>
-            </v-card-text>
+              </v-card-text>
+            </v-card>
+          </v-col>
 
-          </v-card>
-            </v-col>
-
-            <v-col>
-                <v-card
-          class="mx-auto"
-            max-width="344"
-            :color="friday"
-            outlined
-            @click="friday == 'red' ? friday = 'green' : friday = 'red'"
+          <v-col>
+            <v-card
+              class="mx-auto"
+              max-width="344"
+              :color="friday"
+              outlined
+              @click="friday == 'red' ? (friday = 'green') : (friday = 'red')"
             >
-            <v-card-text>
+              <v-card-text>
                 <h3>Friday</h3>
-            </v-card-text>
+              </v-card-text>
+            </v-card>
+          </v-col>
 
-          </v-card>
-            </v-col>
-
-            <v-col>
-                <v-card
-          class="mx-auto"
-            max-width="344"
-            :color="saturday"
-            outlined
-            @click="saturday == 'red' ? saturday = 'green' : saturday = 'red'"
+          <v-col>
+            <v-card
+              class="mx-auto"
+              max-width="344"
+              :color="saturday"
+              outlined
+              @click="
+                saturday == 'red' ? (saturday = 'green') : (saturday = 'red')
+              "
             >
-            <v-card-text>
+              <v-card-text>
                 <h3>Saturday</h3>
-            </v-card-text>
+              </v-card-text>
+            </v-card>
+          </v-col>
 
-          </v-card>
-            </v-col>
-
-            <v-col>
-                <v-card
-          class="mx-auto"
-            max-width="344"
-            :color="sunday"
-            outlined
-            @click="sunday == 'red' ? sunday = 'green' : sunday = 'red'"
+          <v-col>
+            <v-card
+              class="mx-auto"
+              max-width="344"
+              :color="sunday"
+              outlined
+              @click="sunday == 'red' ? (sunday = 'green') : (sunday = 'red')"
             >
-            <v-card-text>
+              <v-card-text>
                 <h3>Sunday</h3>
-            </v-card-text>
-
-          </v-card>
-            </v-col>
-
+              </v-card-text>
+            </v-card>
+          </v-col>
         </v-row>
-          
-          <v-row>
-              <v-col>
-                  Which timezone are you in?
-              </v-col>
-          </v-row>
-          <v-row>
-              <v-col>
-                  <v-text-field
-          v-model="timezone"
-          :counter="20"
-          label="Timezone"
-          required
-          class="mt-3"
-        >
-        </v-text-field>
-              </v-col>
-          </v-row>
-        
+
+        <v-row>
+          <v-col> Which timezone are you in? </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="timezone"
+              :counter="20"
+              label="Timezone"
+              required
+              class="mt-3"
+            >
+            </v-text-field>
+          </v-col>
+        </v-row>
+
         <v-btn to="/" text>Cancel</v-btn>
         <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
       </v-stepper-content>
@@ -296,13 +294,14 @@
 
 
 <script>
-import Vue from 'vue';
 import axios from "axios";
+import auth from "@/auth";
 
 export default {
   name: "newSBR",
   data() {
     return {
+      useremail: auth.user().email,
       e6: 1,
       monday: "red",
       tuesday: "red",
@@ -335,8 +334,10 @@ export default {
             "Content-Type": "application/json",
           },
         };
-        let virtual = this.virtual == "virtual" || this.virtual == "both" ? true : false;
-        let inPerson = this.virtual == "physical" || this.virtual == "both" ? true : false;
+        let virtual =
+          this.virtual == "virtual" || this.virtual == "both" ? true : false;
+        let inPerson =
+          this.virtual == "physical" || this.virtual == "both" ? true : false;
         let aMon = this.monday == "red" ? false : true;
         let aTue = this.tuesday == "red" ? false : true;
         let aWed = this.wednesday == "red" ? false : true;
@@ -348,7 +349,7 @@ export default {
           .post(
             "http://127.0.0.1:8000/api/groups/",
             {
-              groupmate1: Vue.prototype.$email,
+              groupmate1: this.useremail,
               groupmate2: this.groupmate1,
               groupmate3: this.groupmate2,
               groupmate4: this.groupmate3,
@@ -368,7 +369,7 @@ export default {
               async: this.async,
               procast: this.procastination,
               other: this.otherinfo,
-              teamname: ""
+              teamname: "",
             },
             config
           )

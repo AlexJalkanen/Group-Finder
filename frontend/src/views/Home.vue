@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <v-row v-if="groupmates.length > 0">
+    <v-row v-if="groupmates">
       <v-col>
         <p id="titlePhrase">EECS 440 Group Finder</p>
         <v-card class="mx-auto" max-width="550">
@@ -103,26 +103,17 @@ export default {
           this.groupmates = [];
           return;
         }
-        const response = await axios.get(
-          "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + newVal.email
-        );
-        let element = response.data["group"];
-        this.groupmates = [];
-        if (element == null) {
+        try {
+          const response = await axios.get(
+            "https://api.group-finder.com/groups/" + newVal.email
+          );
+          this.groupmates = response.data.groupmates;
+          }
+        catch(error) {
+          alert(error);
+          this.groupmates = [];
           return;
         }
-        if (element["groupmate1"] !== "")
-          this.groupmates.push(element["groupmate1"]);
-        if (element["groupmate2"] !== "")
-          this.groupmates.push(element["groupmate2"]);
-        if (element["groupmate3"] !== "")
-          this.groupmates.push(element["groupmate3"]);
-        if (element["groupmate4"] !== "")
-          this.groupmates.push(element["groupmate4"]);
-        if (element["groupmate5"] !== "")
-          this.groupmates.push(element["groupmate5"]);
-        if (element["groupmate6"] !== "")
-          this.groupmates.push(element["groupmate6"]);
       },
     },
   },

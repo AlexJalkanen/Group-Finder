@@ -247,9 +247,9 @@ export default {
   },
   async mounted() {
     try {
-      const response = await axios.get("http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/");
-      this.items = response.data["groups"];
-      for (let i = 0; i < this.items.length; i += 1) {
+      const response = await axios.get("https://api.group-finder.com/groups/");
+      this.items = response.data;
+      for (let i = 0; i < this.items.length; i++) {
         if (this.items[i]["inPerson"] && this.items[i]["virtual"]) {
           Vue.set(this.items[i], "location", "Prefer remote and in person.");
         } else if (this.items[i]["inPerson"]) {
@@ -257,24 +257,10 @@ export default {
         } else {
           Vue.set(this.items[i], "location", "Prefer remote work.");
         }
-        let groupmates = [];
-        if (this.items[i]["groupmate1"] !== "")
-          groupmates.push(this.items[i]["groupmate1"]);
-        if (this.items[i]["groupmate2"] !== "")
-          groupmates.push(this.items[i]["groupmate2"]);
-        if (this.items[i]["groupmate3"] !== "")
-          groupmates.push(this.items[i]["groupmate3"]);
-        if (this.items[i]["groupmate4"] !== "")
-          groupmates.push(this.items[i]["groupmate4"]);
-        if (this.items[i]["groupmate5"] !== "")
-          groupmates.push(this.items[i]["groupmate5"]);
-        if (this.items[i]["groupmate6"] !== "")
-          groupmates.push(this.items[i]["groupmate6"]);
-        Vue.set(this.items[i], "groupmates", groupmates);
         Vue.set(
           this.items[i],
           "groupcount",
-          String(groupmates.length) + " / 6 group members."
+          String(this.items[i].groupmates.length) + " / 6 group members."
         );
 
         if (this.items[i]["other"] == "") {
@@ -318,7 +304,7 @@ export default {
     async addUser(item, email) {
       try {
         for (let i = 0; i < item.groupmates.length; i += 1) {
-          if (item.groupmates[i] == email) {
+          if (item.groupmates[i] === email) {
             alert("You are already in this group!");
             return;
           }
@@ -328,15 +314,7 @@ export default {
             "Content-Type": "application/json",
           },
         };
-        const response = await axios.get(
-          "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + email
-        );
-        if (response.data.group != null) {
-          alert("You are already in a group!");
-          return;
-        }
-        await axios.patch(
-          "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" + email,
+        await axios.patch("https://api.group-finder.com/groups/" + email,
           {
             groupID: item.groupID,
           },
@@ -345,13 +323,14 @@ export default {
         item.groupmates.push(email);
         item.groupcount = item.groupmates.length + " / 6 group members.";
       } catch (error) {
+        alert(error);
         this.overlayLoad = false;
       }
     },
     async removeUser(item, email) {
       let found = false;
       for (let i = 0; i < item.groupmates.length; i += 1) {
-        if (item.groupmates[i] == email) {
+        if (item.groupmates[i] === email) {
           found = true;
         }
       }
@@ -367,11 +346,11 @@ export default {
           },
         };
         await axios.delete(
-          "http://ec2-18-188-36-221.us-east-2.compute.amazonaws.com/api/groups/" +
-            String(item.groupID) +
-            "/" +
+          "https://api.group-finder.com/groups/" +
             email,
-          {},
+          {
+            data: {groupID: item.groupID},
+          },
           config
         );
         const index = item.groupmates.indexOf(email);
@@ -384,6 +363,7 @@ export default {
             Vue.set(this, this.items, this.items);
         }
       } catch (error) {
+        alert(error);
         this.overlayLoad = false;
       }
     },

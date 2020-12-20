@@ -104,8 +104,14 @@ export default {
           return;
         }
         try {
+          const token = await newVal.getIdToken();
+          let config = {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          };
           const response = await axios.get(
-            "https://api.group-finder.com/groups/" + newVal.email
+            "https://api.group-finder.com/groups/" + newVal.email, config
           );
           this.groupmates = response.data.groupmates;
           }

@@ -230,6 +230,7 @@ export default {
     return {
       loading: true,
       expanded: [],
+      user: auth.user(),
       email: auth.user().email,
       headers: [
         {
@@ -247,7 +248,13 @@ export default {
   },
   async mounted() {
     try {
-      const response = await axios.get("https://api.group-finder.com/groups/");
+      const token = await this.user.getIdToken();
+      let config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get("https://api.group-finder.com/groups/", config);
       this.items = response.data;
       for (let i = 0; i < this.items.length; i++) {
         if (this.items[i]["inPerson"] && this.items[i]["virtual"]) {
@@ -309,9 +316,11 @@ export default {
             return;
           }
         }
+        const token = await this.user.getIdToken();
         let config = {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         };
         await axios.patch("https://api.group-finder.com/groups/" + email,
@@ -340,25 +349,25 @@ export default {
       }
 
       try {
-        let config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
+        const token = await this.user.getIdToken();
         await axios.delete(
           "https://api.group-finder.com/groups/" +
             email,
           {
-            data: {groupID: item.groupID},
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            data: {
+              groupID: item.groupID
+            },
           },
-          config
         );
         const index = item.groupmates.indexOf(email);
         item.groupmates.splice(index, 1);
         item.groupcount = item.groupmates.length + " / 6 group members.";
         if (item.groupmates.length === 0) {
             const item_index = this.items.indexOf(item);
-            console.log(item_index);
             this.items.splice(item_index, 1);
             Vue.set(this, this.items, this.items);
         }

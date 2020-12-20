@@ -1,20 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import Auth from '@/views/Auth'
 import auth from '@/auth'
 
 Vue.use(VueRouter)
 
   const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    meta: {
-      requireAuth: false
-    },
-  },
   {
     path: '/create',
     name: 'Create',
@@ -27,7 +18,7 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/Create.vue')
   },
   {
-    path: '/join',
+    path: '/',
     name: 'Join',
     meta: {
       requireAuth: true

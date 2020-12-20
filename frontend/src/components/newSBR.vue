@@ -308,6 +308,7 @@ export default {
   name: "newSBR",
   data() {
     return {
+      user: auth.user(),
       useremail: auth.user().email,
       e6: 1,
       monday: "red",
@@ -341,9 +342,11 @@ export default {
     async submit() {
       this.overlayLoad = true;
       try {
+        const token = await this.user.getIdToken();
         let config = {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         };
         let virtual =
@@ -388,7 +391,7 @@ export default {
           );
         this.snackbar = true;
         this.overlayLoad = false;
-        this.$router.push({ name: "Home", params: {} });
+        this.$router.push('/');
       } catch (error) {
         this.overlayLoad = false;
       }

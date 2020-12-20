@@ -10,7 +10,7 @@
           <v-toolbar-items class="hidden-sm-and-down">
             <v-btn v-if="!user" to="/auth" text>Log in</v-btn>
             <v-btn v-else @click="logOut" text>Log out</v-btn>
-            <v-btn to="/join" text>Join</v-btn>
+            <v-btn to="/" text>Join</v-btn>
             <v-btn to="/create" text>Create</v-btn>
           </v-toolbar-items>
         </v-toolbar>

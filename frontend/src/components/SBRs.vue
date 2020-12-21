@@ -332,7 +332,7 @@ export default {
         item.groupmates.push(email);
         item.groupcount = item.groupmates.length + " / 6 group members.";
       } catch (error) {
-        alert(error);
+        alert("Error joining group! Are you already in a group?");
         this.overlayLoad = false;
       }
     },

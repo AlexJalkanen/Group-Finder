@@ -1,6 +1,5 @@
 <template>
   <div class="join">
-    <h2>Join a group!</h2>
     <SBRs></SBRs>
   </div>
 </template>

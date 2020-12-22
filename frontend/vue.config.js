@@ -1,4 +1,5 @@
 module.exports = {
+  publicPath: "/",
   pluginOptions: {
     s3Deploy: {
       registry: undefined,

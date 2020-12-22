@@ -122,6 +122,26 @@ else {
         }
     }
 
+    const createNewUser = async (email, groupID, SEP, RPC) => {
+        try {
+            const item = {
+                'email': email,
+                'groupID': groupID,
+                'SEP': SEP,
+                'RPC': RPC
+            }
+            const createParams = {
+                TableName: ddbTableUsers,
+                Item: item
+            }
+            const createData = await ddb.put(createParams).promise();
+            return createData;
+        }
+        catch (error) {
+            return null;
+        }
+    }
+
     app.get('/health', async (req, res) => {
         res.status(200).send("Healthy!");
     });
@@ -148,15 +168,15 @@ else {
 
         req.body.other.slice(0, 500);
         for (let i = 0; i < req.body.groupmates.length; i++) {
-            req.body.groupmates[i].slice(0, 18);
-            if (!req.body.groupmates[i].endsWith("@umich.edu")) {
-                res.status(400).send(req.body.groupmates[i] + " is an invalid email.");
+            req.body.groupmates[i][0].slice(0, 18);
+            if (!req.body.groupmates[i][0].endsWith("@umich.edu")) {
+                res.status(400).send(req.body.groupmates[i][0] + " is an invalid email.");
                 return;
             }
             try {
-                const group = await getUserGroup(req.body.groupmates[i]);
+                const group = await getUserGroup(req.body.groupmates[i][0]);
                 if (group && group.groupID !== '') {
-                    res.status(400).send(req.body.groupmates[i] + " is already in another group.");
+                    res.status(400).send(req.body.groupmates[i][0] + " is already in another group.");
                     return;
                 }
             }
@@ -167,13 +187,14 @@ else {
         }
 
         const groupID = uuidv4();
+        const emails = [];
         for (let i = 0; i < req.body.groupmates.length; i++) {
-            await updateUserGroup(req.body.groupmates[i], groupID);
+            emails.push(req.body.groupmates[i][0]);
+            await createNewUser(req.body.groupmates[i][0], groupID, req.body.groupmates[i][1], req.body.groupmates[i][2]);
         }
         const item = {
             'groupID': groupID,
-            'groupmates': req.body.groupmates,
-            'isOpen': req.body.isOpen,
+            'groupmates': emails,
             'monday': req.body.monday,
             'tuesday': req.body.tuesday,
             'wednesday': req.body.wednesday,
@@ -182,12 +203,9 @@ else {
             'saturday': req.body.saturday,
             'sunday': req.body.sunday,
             'timezone': req.body.timezone,
-            'inPerson': req.body.inPerson,
-            'virtual': req.body.virtual,
             'async': req.body.async,
             'procast': req.body.procast,
             'other': req.body.other,
-            'teamname': req.body.teamname
         };
         const params = {
             TableName: ddbTable,

@@ -8,107 +8,93 @@
       <v-divider></v-divider>
       <v-card-text>
         <v-row>
-            <v-col align="start">
-              <v-list-item>
+            <v-col align="start" cols="6">
+              <v-list-item flat two-line>
                 <v-list-item-content>
                   <v-list-item-title>Availability:</v-list-item-title>
-                  <v-row>
-                    <v-col>
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="currentGroup.monday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">M</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="currentGroup.tuesday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">T</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="currentGroup.wednesday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">W</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="currentGroup.thursday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">T</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="currentGroup.friday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">F</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="currentGroup.saturday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">S</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="currentGroup.sunday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">S</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                  </v-row>
+                  <v-data-table
+                    :headers="availability_headers"
+                    :items="currentGroup.availability_items"
+                    :hide-default-footer="true"
+                    class="elevation-1"
+                  >
+                    <!-- eslint-disable-next-line -->
+                    <template v-slot:item.morning="{ item }">
+                      <v-simple-checkbox
+                        v-model="item.morning"
+                        disabled
+                      ></v-simple-checkbox>
+                    </template>
+                    <!-- eslint-disable-next-line -->
+                    <template v-slot:item.afternoon="{ item }">
+                      <v-simple-checkbox
+                        v-model="item.afternoon"
+                        disabled
+                      ></v-simple-checkbox>
+                    </template>
+                    <!-- eslint-disable-next-line -->
+                    <template v-slot:item.evening="{ item }">
+                      <v-simple-checkbox
+                        v-model="item.evening"
+                        disabled
+                      ></v-simple-checkbox>
+                    </template>
+                    <!-- eslint-disable-next-line -->
+                    <template v-slot:item.night="{ item }">
+                      <v-simple-checkbox
+                        v-model="item.night"
+                        disabled
+                      ></v-simple-checkbox>
+                    </template>
+                  </v-data-table>
                 </v-list-item-content>
               </v-list-item>
+            </v-col>
 
-              <v-list-item flat two-line>
+            <v-col align="start" cols="6">
+              <v-list flat dense>
+                <v-list-item-title>{{ currentGroup.groupmates.length }} / 6 Group members have joined:</v-list-item-title>
+                <v-list-item v-for="(gm, i) in currentGroup.groupmates" :key="i">
+                  <v-list-item-icon>
+                    <v-icon size="15">fa-users</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>{{ gm.email }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                      <v-container fluid class="text-wrap ma-0">
+                        Relevant Previous Coursework:
+                          <v-chip
+                            v-for="(RPC, i) in gm.RPC"
+                            :key="i"
+                            class="ma-0 mr-1"
+                            x-small
+                          >
+                            {{RPC}}
+                          </v-chip>
+                      </v-container>
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mt-n4 mb-n2">
+                      <v-container fluid class="text-wrap ma-0">
+                        Search Engine Preferences:
+                        <v-chip
+                          v-for="(SEP, i) in gm.SEP"
+                          :key="i"
+                          class="ma-0 mr-1"
+                          x-small
+                        >
+                          {{SEP}}
+                        </v-chip>
+                      </v-container>
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title
                     >Prefer synchronous vs. asynchronous
@@ -133,7 +119,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-list-item flat two-line>
+              <v-list-item class="mt-n8 mb-n6">
                 <v-list-item-content>
                   <v-list-item-title
                     >Prefer to start assignments:</v-list-item-title
@@ -169,20 +155,6 @@
                   </p>
                 </v-list-item-content>
               </v-list-item>
-            </v-col>
-
-            <v-col align="start">
-              <v-list flat>
-                {{ currentGroup.groupmates.length }} / 6 Groupmates have already joined:
-                <v-list-item v-for="(gm, i) in currentGroup.groupmates" :key="i">
-                  <v-list-item-icon>
-                    <v-icon size="15">fa-users</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-subtitle>{{ gm }}</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
             </v-col>
           </v-row>
       </v-card-text>
@@ -220,107 +192,93 @@
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <v-row>
-            <v-col align="start">
+            <v-col align="start" cols="6">
               <v-list-item flat two-line>
                 <v-list-item-content>
                   <v-list-item-title>Availability:</v-list-item-title>
-                  <v-row>
-                    <v-col>
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="item.monday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">M</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="item.tuesday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">T</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="item.wednesday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">W</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="item.thursday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">T</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="item.friday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">F</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="item.saturday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">S</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                    <v-col class="pl-0">
-                      <v-card
-                        class="justify-left"
-                        height="30"
-                        width="30"
-                        outlined
-                        :color="item.sunday_color"
-                      >
-                        <v-layout justify-center>
-                          <p style="color: white">S</p>
-                        </v-layout>
-                      </v-card>
-                    </v-col>
-                  </v-row>
+                  <v-data-table
+                    :headers="availability_headers"
+                    :items="item.availability_items"
+                    :hide-default-footer="true"
+                    class="elevation-1"
+                  >
+                    <!-- eslint-disable-next-line -->
+                    <template v-slot:item.morning="{ item }">
+                      <v-simple-checkbox
+                        v-model="item.morning"
+                        disabled
+                      ></v-simple-checkbox>
+                    </template>
+                    <!-- eslint-disable-next-line -->
+                    <template v-slot:item.afternoon="{ item }">
+                      <v-simple-checkbox
+                        v-model="item.afternoon"
+                        disabled
+                      ></v-simple-checkbox>
+                    </template>
+                    <!-- eslint-disable-next-line -->
+                    <template v-slot:item.evening="{ item }">
+                      <v-simple-checkbox
+                        v-model="item.evening"
+                        disabled
+                      ></v-simple-checkbox>
+                    </template>
+                    <!-- eslint-disable-next-line -->
+                    <template v-slot:item.night="{ item }">
+                      <v-simple-checkbox
+                        v-model="item.night"
+                        disabled
+                      ></v-simple-checkbox>
+                    </template>
+                  </v-data-table>
                 </v-list-item-content>
               </v-list-item>
+            </v-col>
 
-              <v-list-item flat two-line>
+            <v-col align="start" cols="6">
+              <v-list flat dense>
+                <v-list-item-title>{{ item.groupmates.length }} / 6 Group members have joined:</v-list-item-title>
+                <v-list-item v-for="(gm, i) in item.groupmates" :key="i">
+                  <v-list-item-icon>
+                    <v-icon size="15">fa-users</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>{{ gm.email }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                      <v-container fluid class="text-wrap ma-0">
+                        Relevant Previous Coursework:
+                          <v-chip
+                            v-for="(RPC, i) in gm.RPC"
+                            :key="i"
+                            class="ma-0 mr-1"
+                            x-small
+                          >
+                            {{RPC}}
+                          </v-chip>
+                      </v-container>
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mt-n4 mb-n2">
+                      <v-container fluid class="text-wrap ma-0">
+                        Search Engine Preferences:
+                        <v-chip
+                          v-for="(SEP, i) in gm.SEP"
+                          :key="i"
+                          class="ma-0 mr-1"
+                          x-small
+                        >
+                          {{SEP}}
+                        </v-chip>
+                      </v-container>
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title
                     >Prefer synchronous vs. asynchronous
@@ -345,7 +303,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-list-item flat two-line>
+              <v-list-item class="mt-n8 mb-n6">
                 <v-list-item-content>
                   <v-list-item-title
                     >Prefer to start assignments:</v-list-item-title
@@ -368,23 +326,6 @@
                   </v-row>
                 </v-list-item-content>
               </v-list-item>
-
-              <v-btn
-                v-if="!item.groupmates.includes(email)"
-                small
-                color="primary"
-                class="mb-2 ml-3 mt-1"
-                @click="addUser(item, email)"
-                >Join Group</v-btn
-              >
-              <v-btn
-                v-else
-                small
-                color="grey"
-                class="mb-2 ml-3 mt-1"
-                @click="removeUser(item, email, item.groupID)"
-                >Leave Group</v-btn
-              >
             </v-col>
 
             <v-col align="start">
@@ -399,19 +340,25 @@
                 </v-list-item-content>
               </v-list-item>
             </v-col>
-
+          </v-row>
+          <v-row>
             <v-col align="start">
-              <v-list flat>
-                {{ item.groupmates.length }} / 6 Groupmates have already joined:
-                <v-list-item v-for="(gm, i) in item.groupmates" :key="i">
-                  <v-list-item-icon>
-                    <v-icon size="15">fa-users</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-subtitle>{{ gm }}</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
+              <v-btn
+                v-if="currentGroup && currentGroup.groupID !== item.groupID"
+                small
+                color="primary"
+                class="mb-2 ml-3 mt-1"
+                @click="addUser(item, email)"
+                >Join Group</v-btn
+              >
+              <v-btn
+                v-else
+                small
+                color="grey"
+                class="mb-2 ml-3 mt-1"
+                @click="removeUser(item, email, item.groupID)"
+                >Leave Group</v-btn
+              >
             </v-col>
           </v-row>
         </td>
@@ -437,59 +384,22 @@ export default {
       sortDesc: false,
       headers: [
         { text: "Group Members", value: "groupcount", align: "start", sortable: true},
-        { text: "Location", value: "location" },
         { text: "Time Zone", value: "timezone" },
       ],
       items: [],
+      availability_headers: [
+        { text: "Day of Week", value: "day" },
+        { text: "Mornings", value: "morning" },
+        { text: "Afternoons", value: "afternoon" },
+        { text: "Evenings", value: "evening" },
+        { text: "Nighttime", value: "night" },
+      ],
       currentGroup: null,
     };
   },
   async mounted() {
     try {
-      const token = await this.user.getIdToken();
-      let config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const currentGroupResponse = await axios.get("https://api.group-finder.com/groups/" + this.email, config);
-      this.currentGroup = currentGroupResponse.data;
-      if (this.currentGroup["other"] == "") {
-          Vue.set(
-            this.currentGroup,
-            "other",
-            "No other group information provided."
-          );
-        }
-      this.currentGroup["monday"]
-          ? Vue.set(this.currentGroup, "monday_color", "green")
-          : Vue.set(this.currentGroup, "monday_color", "red");
-        this.currentGroup["tuesday"]
-          ? Vue.set(this.currentGroup, "tuesday_color", "green")
-          : Vue.set(this.currentGroup, "tuesday_color", "red");
-        this.currentGroup["wednesday"]
-          ? Vue.set(this.currentGroup, "wednesday_color", "green")
-          : Vue.set(this.currentGroup, "wednesday_color", "red");
-        this.currentGroup["thursday"]
-          ? Vue.set(this.currentGroup, "thursday_color", "green")
-          : Vue.set(this.currentGroup, "thursday_color", "red");
-        this.currentGroup["friday"]
-          ? Vue.set(this.currentGroup, "friday_color", "green")
-          : Vue.set(this.currentGroup, "friday_color", "red");
-        this.currentGroup["saturday"]
-          ? Vue.set(this.currentGroup, "saturday_color", "green")
-          : Vue.set(this.currentGroup, "saturday_color", "red");
-        this.currentGroup["sunday"]
-          ? Vue.set(this.currentGroup, "sunday_color", "green")
-          : Vue.set(this.currentGroup, "sunday_color", "red");
-    }
-    catch (error) {
-      this.currentGroup = null;
-    }
-
-    try {
-      const token = await this.user.getIdToken();
+      const token = await this.user.getIdToken(true);
       let config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -498,13 +408,6 @@ export default {
       const response = await axios.get("https://api.group-finder.com/groups/", config);
       this.items = response.data;
       for (let i = 0; i < this.items.length; i++) {
-        if (this.items[i]["inPerson"] && this.items[i]["virtual"]) {
-          Vue.set(this.items[i], "location", "Prefer remote and in person.");
-        } else if (this.items[i]["inPerson"]) {
-          Vue.set(this.items[i], "location", "Prefer in person work.");
-        } else {
-          Vue.set(this.items[i], "location", "Prefer remote work.");
-        }
         Vue.set(
           this.items[i],
           "groupcount",
@@ -518,27 +421,32 @@ export default {
             "No other group information provided."
           );
         }
-        this.items[i]["monday"]
-          ? Vue.set(this.items[i], "monday_color", "green")
-          : Vue.set(this.items[i], "monday_color", "red");
-        this.items[i]["tuesday"]
-          ? Vue.set(this.items[i], "tuesday_color", "green")
-          : Vue.set(this.items[i], "tuesday_color", "red");
-        this.items[i]["wednesday"]
-          ? Vue.set(this.items[i], "wednesday_color", "green")
-          : Vue.set(this.items[i], "wednesday_color", "red");
-        this.items[i]["thursday"]
-          ? Vue.set(this.items[i], "thursday_color", "green")
-          : Vue.set(this.items[i], "thursday_color", "red");
-        this.items[i]["friday"]
-          ? Vue.set(this.items[i], "friday_color", "green")
-          : Vue.set(this.items[i], "friday_color", "red");
-        this.items[i]["saturday"]
-          ? Vue.set(this.items[i], "saturday_color", "green")
-          : Vue.set(this.items[i], "saturday_color", "red");
-        this.items[i]["sunday"]
-          ? Vue.set(this.items[i], "sunday_color", "green")
-          : Vue.set(this.items[i], "sunday_color", "red");
+        const groupmates_with_info = [];
+        var currentGroup = false;
+        for (let j = 0; j < this.items[i].groupmates.length; j++) {
+          if (this.items[i].groupmates[j] === this.email) currentGroup = true;
+          try {
+            const user_info = await axios.get("https://api.group-finder.com/users/" + this.items[i].groupmates[j], config);
+            groupmates_with_info.push({email: this.items[i].groupmates[j], RPC: user_info.data.RPC, SEP: user_info.data.SEP});
+          }
+          catch (error) {
+            groupmates_with_info.push({email: this.items[i].groupmates[j], RPC: null, SEP: null});
+          }
+        }
+        this.items[i].groupmates = groupmates_with_info;
+        this.items[i].availability_items = [
+          { day: "Monday", morning: this.items[i].monday[0], afternoon: this.items[i].monday[1], evening: this.items[i].monday[2], night: this.items[i].monday[3] },
+          { day: "Tuesday", morning: this.items[i].tuesday[0], afternoon: this.items[i].tuesday[1], evening: this.items[i].tuesday[2], night: this.items[i].tuesday[3] },
+          { day: "Wednesday", morning: this.items[i].wednesday[0], afternoon: this.items[i].wednesday[1], evening: this.items[i].wednesday[2], night: this.items[i].wednesday[3] },
+          { day: "Thursday", morning: this.items[i].thursday[0], afternoon: this.items[i].thursday[1], evening: this.items[i].thursday[2], night: this.items[i].thursday[3] },
+          { day: "Friday", morning: this.items[i].friday[0], afternoon: this.items[i].friday[1], evening: this.items[i].friday[2], night: this.items[i].friday[3] },
+          { day: "Saturday", morning: this.items[i].saturday[0], afternoon: this.items[i].saturday[1], evening: this.items[i].saturday[2], night: this.items[i].saturday[3] },
+          { day: "Sunday", morning: this.items[i].sunday[0], afternoon: this.items[i].sunday[1], evening: this.items[i].sunday[2], night: this.items[i].sunday[3] },
+        ];
+
+        if (currentGroup) {
+          this.currentGroup = this.items[i];
+        }
       }
       this.loading = false;
     } catch (error) {
@@ -557,7 +465,7 @@ export default {
             return;
           }
         }
-        const token = await this.user.getIdToken();
+        const token = await this.user.getIdToken(true);
         let config = {
           headers: {
             "Content-Type": "application/json",
@@ -599,7 +507,7 @@ export default {
       }
 
       try {
-        const token = await this.user.getIdToken();
+        const token = await this.user.getIdToken(true);
         await axios.delete(
           "https://api.group-finder.com/groups/" +
             email,

@@ -1421,7 +1421,7 @@ export default {
     async submit() {
       this.overlayLoad = true;
       try {
-        const token = await this.user.getIdToken();
+        const token = await this.user.getIdToken(true);
         let config = {
           headers: {
             "Content-Type": "application/json",

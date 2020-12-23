@@ -104,7 +104,7 @@ export default {
           return;
         }
         try {
-          const token = await newVal.getIdToken();
+          const token = await newVal.getIdToken(true);
           let config = {
             headers: {
               Authorization: `Bearer ${token}`,

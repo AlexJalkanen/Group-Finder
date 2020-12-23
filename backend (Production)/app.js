@@ -362,6 +362,21 @@ else {
         }
     });
 
+    app.get('/users/:email', async (req, res) => {
+        if (!req['currentUser']) { 
+            res.status(403).send('You must be logged in!');
+            return;
+        }
+        const email = req.params.email;
+        const group = await getUserGroup(email);
+        if (group) {
+            res.status(200).send(group);
+        }
+        else {
+            res.status(400).send();
+        }
+    });
+
     var port = process.env.PORT || 3000;
 
     var server = app.listen(port, function () {

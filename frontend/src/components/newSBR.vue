@@ -671,7 +671,17 @@
                         small-chips
                         dense
                         label="Relevant Previous Courses"
-                      ></v-combobox>
+                      >
+                        <template v-slot:no-data> 
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title>
+                                Press <kbd>enter</kbd> to add.
+                              </v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </template>
+                      </v-combobox>
                     </v-list-item-action>
                   </v-list-item>
                 </v-list>
@@ -758,7 +768,17 @@
                         small-chips
                         dense
                         label="Relevant Previous Courses"
-                      ></v-combobox>
+                      >
+                        <template v-slot:no-data> 
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title>
+                                Press <kbd>enter</kbd> to add.
+                              </v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </template>
+                      </v-combobox>
                     </v-list-item-action>
                   </v-list-item>
                 </v-list>
@@ -847,7 +867,17 @@
                         small-chips
                         dense
                         label="Relevant Previous Courses"
-                      ></v-combobox>
+                      >
+                        <template v-slot:no-data> 
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title>
+                                Press <kbd>enter</kbd> to add.
+                              </v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </template>
+                      </v-combobox>
                     </v-list-item-action>
                   </v-list-item>
                 </v-list>
@@ -936,7 +966,17 @@
                         small-chips
                         dense
                         label="Relevant Previous Courses"
-                      ></v-combobox>
+                      >
+                        <template v-slot:no-data> 
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title>
+                                Press <kbd>enter</kbd> to add.
+                              </v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </template>
+                      </v-combobox>
                     </v-list-item-action>
                   </v-list-item>
                 </v-list>
@@ -1025,7 +1065,17 @@
                         small-chips
                         dense
                         label="Relevant Previous Courses"
-                      ></v-combobox>
+                      >
+                        <template v-slot:no-data> 
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title>
+                                Press <kbd>enter</kbd> to add.
+                              </v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </template>
+                      </v-combobox>
                     </v-list-item-action>
                   </v-list-item>
                 </v-list>
@@ -1114,7 +1164,17 @@
                         small-chips
                         dense
                         label="Relevant Previous Courses"
-                      ></v-combobox>
+                      >
+                        <template v-slot:no-data> 
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title>
+                                Press <kbd>enter</kbd> to add.
+                              </v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </template>
+                      </v-combobox>
                     </v-list-item-action>
                   </v-list-item>
                 </v-list>

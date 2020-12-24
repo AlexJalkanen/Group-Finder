@@ -83,44 +83,21 @@ else {
         }
     }
 
-    const updateUserGroup = async (email, groupID) => {
+    const deleteUser = async (email) => {
         try {
-            const group = await getUserGroup(email);
-            if (group) {
-                const userParams = {
-                    TableName: ddbTableUsers,
-                    Key: {
-                        email: email
-                    },
-                    UpdateExpression : "SET #groupID = :groupID",
-                    ExpressionAttributeNames : {
-                        "#groupID" : "groupID"
-                    },
-                    ExpressionAttributeValues : {
-                        ":groupID" : groupID
-                    },
-                    ReturnValues: "UPDATED_NEW"
+            const deleteParams = {
+                TableName: ddbTableUsers,
+                Key: {
+                    email: email
                 }
-                const updateData = await ddb.update(userParams).promise();
-                return updateData;
             }
-            else {
-                const item = {
-                    'email': email,
-                    'groupID': groupID
-                };
-                const createParams = {
-                    TableName: ddbTableUsers,
-                    Item: item
-                }
-                const createData = await ddb.put(createParams).promise();
-                return createData;
-            }
+            const deleteData = await ddb.delete(deleteParams).promise();
+            return deleteData;
         }
         catch (error) {
             return null;
         }
-    }
+    };
 
     const createNewUser = async (email, groupID, SEP, RPC) => {
         try {
@@ -272,7 +249,8 @@ else {
         }
         
         try { 
-            const updateData = await updateUserGroup(email, req.body.groupID);
+            const deleteUserData = await deleteUser(email);
+            const createUserData = await createNewUser(email, req.body.groupID, req.body.SEP, req.body.RPC)
             const params = {
                 TableName: ddbTable,
                 Key: {
@@ -320,7 +298,7 @@ else {
             }
         };
         try { 
-            const updateData = await updateUserGroup(email, "");
+            const deleteUserData = await deleteUser(email);
 
             const data = await ddb.get(oldParams).promise();
             if (data['Item']['groupmates'].length === 1) {

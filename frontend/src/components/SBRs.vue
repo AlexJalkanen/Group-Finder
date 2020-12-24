@@ -343,14 +343,87 @@
           </v-row>
           <v-row>
             <v-col align="start">
-              <v-btn
-                v-if="currentGroup && currentGroup.groupID !== item.groupID"
-                small
-                color="primary"
-                class="mb-2 ml-3 mt-1"
-                @click="addUser(item, email)"
-                >Join Group</v-btn
+              <v-dialog
+                v-model="join_dialog"
+                width="500"
+                v-if="!currentGroup || (currentGroup && currentGroup.groupID !== item.groupID)"
               >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    Join Group
+                  </v-btn>
+                </template>
+
+                <v-card>
+                  <v-card-title class="headline grey lighten-2">
+                    Optional Info/Preferences
+                  </v-card-title>
+
+                  <v-list>
+                  <v-list-item>
+                    <v-list-item-action>
+                      <v-autocomplete
+                        v-model="join_SEP"
+                        :items="search_engine_components"
+                        dense
+                        chips
+                        small-chips
+                        label="Search Engine Preferences"
+                        multiple
+                      ></v-autocomplete>
+                    </v-list-item-action>
+                  </v-list-item>
+
+                  <v-list-item>
+                    <v-list-item-action>
+                      <v-combobox
+                        v-model="join_RPC"
+                        :search-input.sync="search"
+                        clearable
+                        multiple
+                        small-chips
+                        dense
+                        label="Relevant Previous Courses"
+                      >
+                        <template v-slot:no-data v-if="search !== ''"> 
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title>
+                                Press <kbd>enter</kbd> to add "<strong>{{ search }}</strong>".
+                              </v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </template>
+                      </v-combobox>
+                    </v-list-item-action>
+                  </v-list-item>
+                </v-list>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="grey"
+                      text
+                      @click="join_dialog = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      color="primary"
+                      text
+                      @click="join_dialog = false; addUser(item, email)"
+                    >
+                      Join
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
               <v-btn
                 v-else
                 small
@@ -395,6 +468,20 @@ export default {
         { text: "Nighttime", value: "night" },
       ],
       currentGroup: null,
+      join_dialog: false,
+      search_engine_components: [
+        "HTML Parser", 
+        "Crawler", 
+        "Index", 
+        "Constraint Solver", 
+        "Query Compiler", 
+        "Ranker", 
+        "Frontend",
+        "No Preference"
+      ],
+      search: "",
+      join_RPC: [],
+      join_SEP: [],
     };
   },
   async mounted() {
@@ -475,10 +562,12 @@ export default {
         await axios.patch("https://api.group-finder.com/groups/" + email,
           {
             groupID: item.groupID,
+            RPC: this.join_RPC,
+            SEP: this.join_SEP,
           },
           config
         );
-        item.groupmates.push(email);
+        item.groupmates.push({email: email, RPC: this.join_RPC, SEP: this.join_SEP});
         item.groupcount = item.groupmates.length + " / 6 group members.";
         this.currentGroup = item;
       } catch (error) {
@@ -495,10 +584,16 @@ export default {
           }
         });
       }
+      if (!item) {
+        alert("Not in a group");
+        return;
+      }
       let found = false;
-      for (let i = 0; i < item.groupmates.length; i += 1) {
-        if (item.groupmates[i] === email) {
+      let index = 0;
+      for (; index < item.groupmates.length; index++) {
+        if (item.groupmates[index].email === email) {
           found = true;
+          break;
         }
       }
       if (!found) {
@@ -521,7 +616,6 @@ export default {
             },
           },
         );
-        const index = item.groupmates.indexOf(email);
         item.groupmates.splice(index, 1);
         item.groupcount = item.groupmates.length + " / 6 group members.";
         if (item.groupmates.length === 0) {

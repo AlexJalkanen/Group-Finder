@@ -346,7 +346,7 @@
               <v-dialog
                 v-model="join_dialog"
                 width="500"
-                v-if="!currentGroup || (currentGroup && currentGroup.groupID !== item.groupID)"
+                v-if="item.groupmates.length < 6 && (!currentGroup || (currentGroup && currentGroup.groupID !== item.groupID))"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -425,7 +425,7 @@
                 </v-card>
               </v-dialog>
               <v-btn
-                v-else
+                v-else-if="currentGroup && currentGroup.groupID === item.groupID"
                 small
                 color="grey"
                 class="mb-2 ml-3 mt-1"

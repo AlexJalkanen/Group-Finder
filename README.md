@@ -12,25 +12,19 @@ Group-Finder is broken up into two halves - front and back end.
 ## Frontend
 The frontend of the application was developed using Vue Js with Axios to fetch calls to the API. To serve the application, any package manager for Node.Js will work.
 
-### Deploy Frontend Locally
+### Deploying Frontend
 Install dependencies with ```yarn install```
-Run locally with ```yarn run serve```
+Run locally with ```yarn serve```
+To create build distribution, run ```yarn build```
 
-#### Dependencies:
--   "@mdi/font": "^3.6.95",
--   "axios": "^0.19.2",
--   "core-js": "^3.6.5",
--   "roboto-fontface": "*",
--   "vue": "^2.6.11",
--   "vue-cli-plugin-s3-deploy": "^4.0.0-rc3",
--   "vue-ctk-date-time-picker": "^2.4.0",
--   "vue-router": "^3.2.0",
--   "vuelidate": "^0.7.5",
--   "vuetify": "^2.2.11"
+By default, the frontend uses product end points. Note that any changes made locally WILL modify the production backend database.
+
+The build files are served from an Amazon S3 bucket, using CloudFlare as a CDN to deliver the content. AWS certificate is used for HTTPS.
 
 ## Backend
-To do...
+The backend server is written with Node JS with Express. It is deployed on Amazon Elastic Beanstalk to handle servers and load balancers, and uses DynamoDB as the database. 
 
+To deploy to Amazon EBS, zip the contents of the backend folder, ensuring app.js is on the root level when unzipped (ie. not in a backend folder). Upload the zip to Amazon EBS to handle deployment and load balancers automatically. 
 
 # Authors
 - Alex Jalkanen

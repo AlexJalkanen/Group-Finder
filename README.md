@@ -26,5 +26,3 @@ The backend server is written with Node JS with Express. It is deployed on Amazo
 
 To deploy to Amazon EBS, zip the contents of the backend folder, ensuring app.js is on the root level when unzipped (ie. not in a backend folder). Upload the zip to Amazon EBS to handle deployment and load balancers automatically. 
 
-# Authors
-- Alex Jalkanen

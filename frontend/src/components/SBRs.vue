@@ -183,6 +183,7 @@
       class="elevation-1"
       :loading="loading"
       loading-text="Loading... Please wait"
+      no-data-text="No groups formed yet. Create one!"
       item-key="groupID"
       show-expand
       :expanded.sync="expanded"
